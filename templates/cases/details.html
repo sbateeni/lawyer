@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ case.title }} - المحامي الذكي</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>المحامي الذكي</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">الرئيسية</a>
+            <a href="{{ url_for('case.cases') }}">القضايا</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="case-details">
+            {% if case %}
+            <div class="case-header">
+                <h2>{{ case.title }}</h2>
+                <div class="case-meta">
+                    <span>التاريخ: {{ case.date }}</span>
+                    <span>الحالة: {{ case.status }}</span>
+                </div>
+            </div>
+
+            <div class="case-content">
+                <div class="info-group">
+                    <h3>وصف القضية</h3>
+                    <p>{{ case.description }}</p>
+                </div>
+
+                <div class="info-group">
+                    <h3>الأطراف</h3>
+                    <div class="parties-list">
+                        {% for party in case.parties %}
+                        <div class="party-card">
+                            <h4>{{ party.name }}</h4>
+                            <p>{{ party.role }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <h3>التحليلات</h3>
+                    <div class="analyses-list">
+                        {% for i in range(1, 15) %}
+                            {% set analysis = none %}
+                            {% for a in case.analyses %}
+                                {% if a.stage == i %}
+                                    {% set analysis = a %}
+                                {% endif %}
+                            {% endfor %}
+                            
+                            <div class="analysis-card {% if analysis %}completed{% elif i == case.current_stage %}current{% else %}pending{% endif %}">
+                                <h4>{{ get_stage_title(i) }}</h4>
+                                {% if analysis %}
+                                    <div class="analysis-content">
+                                        <p>{{ analysis.result }}</p>
+                                        <small>{{ analysis.date }}</small>
+                                    </div>
+                                {% elif i == case.current_stage %}
+                                    <div class="analysis-form">
+                                        <form class="stage-analysis-form" data-stage="{{ i }}">
+                                            <input type="hidden" name="case_id" value="{{ case.id }}">
+                                            <textarea name="text" required>{{ case.description }}</textarea>
+                                            <button type="submit" class="btn">تحليل المرحلة</button>
+                                        </form>
+                                    </div>
+                                {% else %}
+                                    <p class="pending-message">في انتظار اكتمال المراحل السابقة</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p class="error">لم يتم العثور على القضية</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2023</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.stage-analysis-form').forEach(form => {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const stage = parseInt(this.dataset.stage);
+                const caseId = this.querySelector('[name="case_id"]').value;
+                const text = this.querySelector('[name="text"]').value;
+                const submitButton = this.querySelector('button[type="submit"]');
+                
+                try {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'جاري التحليل...';
+                    
+                    const response = await fetch('/api/analyze', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            stage: stage,
+                            text: text,
+                            case_id: caseId
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    if (result.status === 'success') {
+                        // تحديث الصفحة لعرض التحليل الجديد
+                        window.location.reload();
+                    } else {
+                        alert('حدث خطأ أثناء التحليل');
+                    }
+                } catch (error) {
+                    alert('حدث خطأ في النظام');
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'تحليل المرحلة';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل المرحلة {{ stage }} - المحامي الذكي</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>المحامي الذكي</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">الرئيسية</a>
+            <a href="{{ url_for('case.cases') }}">القضايا</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="analysis">
+            <h2>{{ get_stage_title(stage) }}</h2>
+            <div class="analysis-form">
+                <form id="analysisForm">
+                    <div class="form-group">
+                        <label for="model">نموذج التحليل:</label>
+                        <select id="model" name="model" required>
+                            {% if 'gemini' in available_models %}
+                            <option value="gemini">Google Gemini Pro</option>
+                            {% endif %}
+                            {% if 'llama' in available_models %}
+                            <option value="llama">Llama 3 (Groq)</option>
+                            {% endif %}
+                        </select>
+                        {% if not available_models %}
+                        <p class="error-message">لا توجد نماذج متاحة. يرجى التحقق من مفاتيح API.</p>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="text">النص القانوني:</label>
+                        <textarea id="text" name="text" rows="10" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" {% if not available_models %}disabled{% endif %}>تحليل</button>
+                </form>
+            </div>
+            <div id="result" class="analysis-result"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2023</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('analysisForm');
+        const result = document.getElementById('result');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const text = document.getElementById('text').value;
+            const model = document.getElementById('model').value;
+            const submitButton = form.querySelector('button[type="submit"]');
+            
+            try {
+                submitButton.disabled = true;
+                submitButton.textContent = 'جاري التحليل...';
+                
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        stage: "{{ stage }}",
+                        model_type: model
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    result.innerHTML = `
+                        <div class="result-card">
+                            <div class="model-info">تم التحليل باستخدام: ${data.model_used === 'gemini' ? 'Google Gemini Pro' : 'Llama 3 (Groq)'}</div>
+                            <div class="result-content">${data.result}</div>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = `<div class="error-card"><p>${data.message || 'حدث خطأ أثناء التحليل'}</p></div>`;
+                }
+            } catch (error) {
+                result.innerHTML = '<div class="error-card"><p>حدث خطأ في النظام</p></div>';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'تحليل';
+            }
+        });
+    </script>
+</body>
+</html> 

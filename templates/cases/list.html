@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة القضايا - المحامي الذكي</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>المحامي الذكي</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">الرئيسية</a>
+            <a href="{{ url_for('case.cases') }}">القضايا</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cases">
+            <h2>قائمة القضايا</h2>
+            {% if cases %}
+            <div class="cases-grid">
+                {% for case in cases %}
+                <a href="{{ url_for('case.case_details', case_id=case.id) }}" class="case-card">
+                    <h3>{{ case.title }}</h3>
+                    <p>{{ case.description }}</p>
+                    <div class="case-meta">
+                        <span>التاريخ: {{ case.date }}</span>
+                        <span>الحالة: {{ case.status }}</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="no-cases">لا توجد قضايا حالياً</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2023</p>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}المكتبة القانونية الذكية | المحامي الذكي{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="text-center mb-0">المكتبة القانونية الذكية</h1>
+                </div>
+                <div class="card-body">
+                    <!-- قسم البحث -->
+                    <div class="search-section mb-4">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="searchInput" placeholder="ابحث في القوانين والتشريعات...">
+                                    <button class="btn btn-primary" type="button" id="searchButton">
+                                        <i class="bi bi-search"></i> بحث
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select" id="categoryFilter">
+                                    <option value="">جميع التصنيفات</option>
+                                    <option value="civil">القانون المدني</option>
+                                    <option value="criminal">القانون الجنائي</option>
+                                    <option value="commercial">القانون التجاري</option>
+                                    <option value="family">قانون الأسرة</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- عرض النتائج -->
+                    <div class="row">
+                        <!-- القوانين الأساسية -->
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-book"></i>
+                                        القوانين الأساسية
+                                    </h5>
+                                </div>
+                                <div class="card-body" id="basicLaws">
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item list-group-item-action" data-law-id="1">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-1">القانون المدني</h6>
+                                                <span class="badge bg-primary">2024</span>
+                                            </div>
+                                            <small class="text-muted">آخر تحديث: قبل 3 أيام</small>
+                                        </a>
+                                        <!-- المزيد من القوانين -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- التحديثات والتعديلات -->
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-clock-history"></i>
+                                        التحديثات والتعديلات
+                                    </h5>
+                                </div>
+                                <div class="card-body" id="updates">
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item list-group-item-action" data-update-id="1">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-1">تعديل المادة 150</h6>
+                                                <span class="badge bg-warning">جديد</span>
+                                            </div>
+                                            <small class="text-muted">تاريخ التعديل: 2024/03/15</small>
+                                        </a>
+                                        <!-- المزيد من التحديثات -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- التفسيرات والشروحات -->
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-lightbulb"></i>
+                                        التفسيرات والشروحات
+                                    </h5>
+                                </div>
+                                <div class="card-body" id="interpretations">
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item list-group-item-action" data-interpretation-id="1">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-1">شرح المادة 150 - القانون المدني</h6>
+                                                <span class="badge bg-info">تفسير</span>
+                                            </div>
+                                            <small class="text-muted">بواسطة: د. أحمد محمد</small>
+                                        </a>
+                                        <!-- المزيد من التفسيرات -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- تفاصيل القانون المحدد -->
+                    <div class="card mt-4" id="lawDetails" style="display: none;">
+                        <div class="card-header">
+                            <h5 class="mb-0" id="lawTitle"></h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="law-content" id="lawContent"></div>
+                            <div class="law-updates" id="lawUpdates"></div>
+                            <div class="law-interpretations" id="lawInterpretations"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-group-item {
+        transition: transform 0.2s;
+        cursor: pointer;
+    }
+    .list-group-item:hover {
+        transform: translateY(-2px);
+        background-color: #f8f9fa;
+    }
+    .badge {
+        font-size: 0.8rem;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // البحث في القوانين
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const categoryFilter = document.getElementById('categoryFilter');
+
+    async function searchLaws() {
+        const searchTerm = searchInput.value;
+        const category = categoryFilter.value;
+
+        try {
+            const response = await fetch('/api/legal-library/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    search: searchTerm,
+                    category: category
+                })
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                updateResults(data.results);
+            }
+        } catch (error) {
+            console.error('Error searching laws:', error);
+        }
+    }
+
+    // عرض تفاصيل القانون
+    function showLawDetails(lawId) {
+        const lawDetails = document.getElementById('lawDetails');
+        const lawTitle = document.getElementById('lawTitle');
+        const lawContent = document.getElementById('lawContent');
+        const lawUpdates = document.getElementById('lawUpdates');
+        const lawInterpretations = document.getElementById('lawInterpretations');
+
+        // استرجاع تفاصيل القانون من الخادم
+        fetch(`/api/legal-library/law/${lawId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    lawTitle.textContent = data.law.title;
+                    lawContent.innerHTML = data.law.content;
+                    lawUpdates.innerHTML = data.law.updates;
+                    lawInterpretations.innerHTML = data.law.interpretations;
+                    lawDetails.style.display = 'block';
+                }
+            })
+            .catch(error => console.error('Error fetching law details:', error));
+    }
+
+    // إضافة مستمعي الأحداث
+    searchButton.addEventListener('click', searchLaws);
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') searchLaws();
+    });
+    categoryFilter.addEventListener('change', searchLaws);
+
+    // مستمعي الأحداث للقوانين والتحديثات والتفسيرات
+    document.querySelectorAll('[data-law-id]').forEach(element => {
+        element.addEventListener('click', (e) => {
+            e.preventDefault();
+            showLawDetails(e.currentTarget.dataset.lawId);
+        });
+    });
+});
+</script>
+{% endblock %} 
