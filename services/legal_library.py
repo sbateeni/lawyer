@@ -9,13 +9,18 @@ load_dotenv()
 
 # إعداد نماذج الذكاء الاصطناعي
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
-groq_client = Groq(api_key=os.getenv('GROQ_API_KEY'))
+try:
+    groq_client = Groq(api_key=os.getenv('GROQ_API_KEY'))
+except Exception as e:
+    print(f"Warning: Could not initialize Groq client: {e}")
+    groq_client = None
 
 # تهيئة النماذج
 models = {
-    'gemini': genai.GenerativeModel('gemini-pro'),
-    'llama': groq_client
+    'gemini': genai.GenerativeModel('gemini-pro')
 }
+if groq_client:
+    models['llama'] = groq_client
 
 SYSTEM_PROMPT_ARABIC = """أنت مساعد قانوني متخصص في القوانين الفلسطينية. عليك الالتزام بما يلي:
 1. استخدم اللغة العربية الفصحى حصراً في جميع إجاباتك
@@ -47,27 +52,31 @@ class LegalLibraryService:
             analysis_result = analysis_response.text
 
             # استخدام Llama للبحث
-            search_response = models['llama'].chat.completions.create(
-                messages=[{
-                    "role": "system",
-                    "content": SYSTEM_PROMPT_ARABIC
-                }, {
-                    "role": "user",
-                    "content": f"قم بالبحث عن القوانين والأحكام المتعلقة بالموضوع التالي وأجب باللغة العربية حصراً: {query}"
-                }],
-                model="llama3-groq-70b-8192-tool-use-preview",
-                temperature=0.7,
-                max_tokens=4096,
-                top_p=0.9,
-                stream=False
-            )
-            
+            if 'llama' in models:
+                search_response = models['llama'].chat.completions.create(
+                    messages=[{
+                        "role": "system",
+                        "content": SYSTEM_PROMPT_ARABIC
+                    }, {
+                        "role": "user",
+                        "content": f"قم بالبحث عن القوانين والأحكام المتعلقة بالموضوع التالي وأجب باللغة العربية حصراً: {query}"
+                    }],
+                    model="llama3-groq-70b-8192-tool-use-preview",
+                    temperature=0.7,
+                    max_tokens=4096,
+                    top_p=0.9,
+                    stream=False
+                )
+                search_result = search_response.choices[0].message.content
+            else:
+                search_result = 'حدث خطأ في البحث'
+
             # جمع النتائج من المصادر
             sources_results = await self._fetch_from_sources(query)
             
             results = {
                 'analysis': analysis_result,
-                'search': search_response.choices[0].message.content,
+                'search': search_result,
                 'sources': sources_results
             }
             
@@ -117,4 +126,4 @@ class LegalLibraryService:
             }]
         except Exception as e:
             print(f"Error in get_latest_updates: {str(e)}")
-            return [] 
+            return []

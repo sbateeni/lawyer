@@ -1,5 +1,5 @@
 flask
-groq
+groq==0.15.0
 python-dotenv
 nltk
 language-tool-python
@@ -12,3 +12,4 @@ requests==2.31.0
 google-generativeai==0.3.2
 reportlab==4.0.8
 pytesseract==0.3.10
+docx
