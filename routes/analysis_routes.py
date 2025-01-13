@@ -109,11 +109,12 @@ def analyze():
                     "role": "user",
                     "content": prompt
                 }],
-                model="llama3-groq-70b-8192-tool-use-preview",
-                temperature=0.7,
-                max_tokens=4096,
-                top_p=0.9,
-                stream=False
+                model="llama-3.3-70b-versatile",
+                temperature=1,
+                max_tokens=1024,
+                top_p=1,
+                stream=False,
+                stop=None
             )
             result = completion.choices[0].message.content
         

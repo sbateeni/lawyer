@@ -106,6 +106,68 @@
         .nav-item:hover {
             color: #2C3E50;
         }
+        .hero-section {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .hero-section p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card-body {
+            text-align: center;
+        }
+        .card-body i {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .card-body h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .card-body p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .features-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .features-section h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .feature-item {
+            text-align: center;
+        }
+        .feature-item i {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .feature-item h4 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .feature-item p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -122,54 +184,65 @@
     </header>
 
     <main>
-        <section class="case-analysis">
-            <h2>تحليل قضية جديدة</h2>
-            <div class="case-form">
-                <div class="form-group">
-                    <label for="title">عنوان القضية:</label>
-                    <input type="text" id="title" name="title" required>
+        <div class="hero-section text-center py-5">
+            <h1>المحامي الذكي</h1>
+            <p class="lead">مساعدك القانوني الشخصي المدعوم بالذكاء الاصطناعي</p>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-balance-scale fa-3x mb-3"></i>
+                            <h3>تحليل القضايا</h3>
+                            <p>تحليل شامل للقضايا القانونية باستخدام الذكاء الاصطناعي</p>
+                            <a href="{{ url_for('analyze_case') }}" class="btn btn-primary">ابدأ التحليل</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="description">وصف القضية:</label>
-                    <textarea id="description" name="description" rows="10" required 
-                        placeholder="يرجى وصف القضية بالتفصيل، متضمناً:
-- الوقائع والأحداث
-- الأطراف المعنية
-- التواريخ المطلوبة
-- الوثائق والمستندات المتوفرة
-- أي معلومات إضافية ذات صلة"></textarea>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-book-open fa-3x mb-3"></i>
+                            <h3>المكتبة القانونية</h3>
+                            <p>مجموعة شاملة من القوانين والتشريعات الفلسطينية</p>
+                            <a href="{{ url_for('legal_library.legal_library_page') }}" class="btn btn-primary">استعرض المكتبة</a>
+                        </div>
+                    </div>
                 </div>
-                <button type="button" id="startAnalysis" class="btn">بدء التحليل الشامل</button>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-comments fa-3x mb-3"></i>
+                            <h3>استشارة قانونية</h3>
+                            <p>احصل على استشارة قانونية فورية من نظامنا الذكي</p>
+                            <a href="{{ url_for('chat.chat_page') }}" class="btn btn-primary">ابدأ المحادثة</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div id="success-message" class="success-message" style="display: none;">
-                <div class="success-content">
-                    <div class="success-icon">✓</div>
-                    <h3>تم إكمال التحليل بنجاح!</h3>
-                    <p>تم تحليل جميع المراحل الـ 14 بنجاح. يمكنك الآن مراجعة نتائج كل مرحلة أدناه.</p>
+            <div class="features-section mt-5">
+                <h2 class="text-center mb-4">مميزات النظام</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-item">
+                            <i class="fas fa-robot"></i>
+                            <h4>ذكاء اصطناعي متقدم</h4>
+                            <p>يستخدم النظام أحدث تقنيات الذكاء الاصطناعي لتحليل القضايا القانونية</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-item">
+                            <i class="fas fa-clock"></i>
+                            <h4>تحليل سريع</h4>
+                            <p>نتائج فورية وتحليل شامل للقضايا في دقائق معدودة</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="analyses-list">
-                <!-- سيتم إضافة نتائج التحليل هنا -->
-            </div>
-
-            <section class="links">
-                <h2>الصفحات القانونية</h2>
-                <ul>
-                    <li><a href="{{ url_for('legal_library.legal_library_page') }}">المكتبة القانونية</a></li>
-                    <li><a href="{{ url_for('document_analysis') }}">تحليل المستندات</a></li>
-                    <li><a href="{{ url_for('law_information') }}">معلومات قانونية</a></li>
-                    <li><a href="{{ url_for('legal_resources') }}">مصادر قانونية</a></li>
-                    <li><a href="{{ url_for('legal_documents') }}">الوثائق القانونية</a></li>
-                    <li><a href="{{ url_for('legal_articles') }}">المقالات القانونية</a></li>
-                    <li><a href="{{ url_for('appointment_management') }}">إدارة المواعيد</a></li>
-                    <li><a href="{{ url_for('faq') }}">الأسئلة الشائعة</a></li>
-                    <li><a href="{{ url_for('lawyer_rating') }}">تقييم المحامين</a></li>
-                    <li><a href="{{ url_for('contact') }}">صفحة الاتصال</a></li>
-                </ul>
-            </section>
-        </section>
+        </div>
     </main>
 
     <footer>

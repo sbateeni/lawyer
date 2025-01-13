@@ -46,7 +46,6 @@ try:
 
     @app.route('/')
     def home():
-        print("Accessing index route...")
         return render_template('index.html')
 
     @app.route('/index')
@@ -128,6 +127,10 @@ try:
     @app.route('/document_analysis')
     def document_analysis():
         return render_template('document_analysis.html')
+
+    @app.route('/analyze')
+    def analyze_case():
+        return render_template('analyze.html')
 
     if __name__ == '__main__':
         print("Starting Flask server...")
