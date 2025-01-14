@@ -2,6 +2,7 @@ import os
 import sys
 import traceback
 import importlib
+from datetime import datetime
 
 # إضافة مسار المشروع إلى sys.path
 project_root = os.path.dirname(os.path.abspath(__file__))
@@ -43,6 +44,13 @@ try:
     app.register_blueprint(document_analysis_bp)
     app.register_blueprint(document_information_bp)
     app.register_blueprint(legal_library_bp)
+
+    # Context Processors
+    @app.context_processor
+    def utility_processor():
+        return {
+            'now': datetime.now()
+        }
 
     @app.route('/')
     def home():
@@ -131,6 +139,10 @@ try:
     @app.route('/analyze')
     def analyze_case():
         return render_template('analyze.html')
+
+    @app.route('/legal-library')
+    def legal_library():
+        return render_template('legal_library.html')
 
     if __name__ == '__main__':
         print("Starting Flask server...")

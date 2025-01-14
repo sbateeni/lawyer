@@ -171,203 +171,109 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1 class="header-title">المحامي الذكي</h1>
-        <nav>
-            <a class="nav-item" href="{{ url_for('home') }}">الرئيسية</a>
-            <a class="nav-item" href="{{ url_for('chat.chat_page') }}">محادثة بناء القضية</a>
-            <a class="nav-item" href="{{ url_for('document_analysis') }}">تحليل المستندات</a>
-            <a class="nav-item" href="{{ url_for('legal_library.legal_library_page') }}">المكتبة القانونية</a>
-            <a class="nav-item" href="{{ url_for('law_information') }}">معلومات قانونية</a>
-            <a class="nav-item" href="{{ url_for('legal_resources') }}">مصادر قانونية</a>
-        </nav>
-    </header>
+    {% extends "base.html" %}
 
-    <main>
-        <div class="hero-section text-center py-5">
-            <h1>المحامي الذكي</h1>
-            <p class="lead">مساعدك القانوني الشخصي المدعوم بالذكاء الاصطناعي</p>
-        </div>
+    {% block title %}المحامي الذكي - الصفحة الرئيسية{% endblock %}
 
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-balance-scale fa-3x mb-3"></i>
-                            <h3>تحليل القضايا</h3>
-                            <p>تحليل شامل للقضايا القانونية باستخدام الذكاء الاصطناعي</p>
-                            <a href="{{ url_for('analyze_case') }}" class="btn btn-primary">ابدأ التحليل</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-book-open fa-3x mb-3"></i>
-                            <h3>المكتبة القانونية</h3>
-                            <p>مجموعة شاملة من القوانين والتشريعات الفلسطينية</p>
-                            <a href="{{ url_for('legal_library.legal_library_page') }}" class="btn btn-primary">استعرض المكتبة</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-comments fa-3x mb-3"></i>
-                            <h3>استشارة قانونية</h3>
-                            <p>احصل على استشارة قانونية فورية من نظامنا الذكي</p>
-                            <a href="{{ url_for('chat.chat_page') }}" class="btn btn-primary">ابدأ المحادثة</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    {% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/index.css') }}">
+    {% endblock %}
 
-            <div class="features-section mt-5">
-                <h2 class="text-center mb-4">مميزات النظام</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <div class="feature-item">
-                            <i class="fas fa-robot"></i>
-                            <h4>ذكاء اصطناعي متقدم</h4>
-                            <p>يستخدم النظام أحدث تقنيات الذكاء الاصطناعي لتحليل القضايا القانونية</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="feature-item">
-                            <i class="fas fa-clock"></i>
-                            <h4>تحليل سريع</h4>
-                            <p>نتائج فورية وتحليل شامل للقضايا في دقائق معدودة</p>
-                        </div>
-                    </div>
-                </div>
+    {% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>مرحباً بك في المحامي الذكي</h1>
+            <p>مساعدك القانوني الشخصي المدعوم بالذكاء الاصطناعي</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('chat.chat_page') }}" class="btn btn-primary">ابدأ محادثة قانونية</a>
+                <a href="{{ url_for('document_analysis') }}" class="btn btn-secondary">حلل مستنداتك</a>
+                <a href="{{ url_for('analyze_case') }}" class="btn">ابدأ تحليل القضية</a>
+                <a href="{{ url_for('analyze_case') }}" class="btn">تحليل القضية</a>
             </div>
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <p>جميع الحقوق محفوظة &copy; 2025</p>
-    </footer>
+    <!-- Services Section -->
+    <section class="services">
+        <h2 class="section-title">خدماتنا</h2>
+        <div class="grid grid-3">
+            <div class="service-card">
+                <i class="fas fa-comments service-icon"></i>
+                <h3>محادثة بناء القضية</h3>
+                <p>تحدث مع محامينا الذكي لبناء قضيتك وفهم خياراتك القانونية</p>
+                <a href="{{ url_for('chat.chat_page') }}" class="btn">ابدأ المحادثة</a>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-file-alt service-icon"></i>
+                <h3>تحليل المستندات</h3>
+                <p>حلل مستنداتك القانونية واحصل على رؤى وتوصيات ذكية</p>
+                <a href="{{ url_for('document_analysis') }}" class="btn">حلل مستنداتك</a>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-book-open service-icon"></i>
+                <h3>المكتبة القانونية</h3>
+                <p>اكتشف مكتبتنا الغنية بالموارد والمراجع القانونية</p>
+                <a href="{{ url_for('legal_library.legal_library_page') }}" class="btn">تصفح المكتبة</a>
+            </div>
+        </div>
+    </section>
 
-    <script>
-        const stages = [
-            { id: 1, title: 'التحليل الأولي للنص', model: 'gemini' },
-            { id: 2, title: 'تحليل الوقائع والأحداث', model: 'llama' },
-            { id: 3, title: 'التحليل القانوني الأساسي', model: 'gemini' },
-            { id: 4, title: 'تحليل الأدلة والمستندات', model: 'llama' },
-            { id: 5, title: 'تحليل السوابق القضائية', model: 'gemini' },
-            { id: 6, title: 'تحليل الحجج القانونية', model: 'llama' },
-            { id: 7, title: 'تحليل الدفوع القانونية', model: 'gemini' },
-            { id: 8, title: 'التحليل الإجرائي', model: 'llama' },
-            { id: 9, title: 'صياغة الاستراتيجية القانونية', model: 'gemini' },
-            { id: 10, title: 'تحليل المخاطر والفرص', model: 'llama' },
-            { id: 11, title: 'اقتراح الحلول والبدائل', model: 'gemini' },
-            { id: 12, title: 'إعداد الملخص النهائي', model: 'llama' }
-        ];
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">لماذا تختار المحامي الذكي؟</h2>
+        <div class="grid grid-2">
+            <div class="feature-card">
+                <i class="fas fa-robot feature-icon"></i>
+                <h3>ذكاء اصطناعي متقدم</h3>
+                <p>نستخدم أحدث تقنيات الذكاء الاصطناعي لتحليل قضيتك وتقديم أفضل النصائح</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt feature-icon"></i>
+                <h3>خصوصية وأمان</h3>
+                <p>نضمن حماية بياناتك ومعلوماتك الشخصية بأحدث تقنيات الأمان</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clock feature-icon"></i>
+                <h3>متوفر 24/7</h3>
+                <p>احصل على المساعدة القانونية في أي وقت ومن أي مكان</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3>تحليل دقيق</h3>
+                <p>تحليل شامل ودقيق لقضيتك باستخدام أحدث النماذج القانونية</p>
+            </div>
+        </div>
+    </section>
 
-        const analysesList = document.querySelector('.analyses-list');
-        let currentCase = null;
-        let completedStages = 0;
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="grid grid-3">
+            <div class="stat-card">
+                <h3>+1000</h3>
+                <p>قضية تم تحليلها</p>
+            </div>
+            <div class="stat-card">
+                <h3>+5000</h3>
+                <p>مستند تم معالجته</p>
+            </div>
+            <div class="stat-card">
+                <h3>+3000</h3>
+                <p>مستخدم نشط</p>
+            </div>
+        </div>
+    </section>
 
-        // إنشاء بطاقات التحليل
-        stages.forEach(stage => {
-            const card = document.createElement('div');
-            card.className = 'analysis-card pending';
-            card.id = `stage-${stage.id}`;
-            card.innerHTML = `
-                <div class="stage-header">
-                    <h3>${stage.title}</h3>
-                    <span class="model-badge ${stage.model}">${stage.model === 'gemini' ? 'Google Gemini Pro' : 'Llama 3 (Groq)'}</span>
-                </div>
-                <div class="stage-content">
-                    <div class="stage-status">في انتظار التحليل...</div>
-                </div>
-            `;
-            analysesList.appendChild(card);
-        });
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>ابدأ رحلتك القانونية اليوم</h2>
+        <p>دع المحامي الذكي يساعدك في فهم وحل قضيتك القانونية</p>
+        <a href="{{ url_for('chat.chat_page') }}" class="btn btn-accent">ابدأ الآن</a>
+    </section>
+    {% endblock %}
 
-        async function analyzeStage(stage, caseData) {
-            const card = document.getElementById(`stage-${stage.id}`);
-            card.className = 'analysis-card processing';
-            card.querySelector('.stage-status').textContent = 'جاري التحليل...';
-
-            try {
-                const response = await fetch('/api/analyze', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        text: caseData.description,
-                        stage: stage.id,
-                        model_type: stage.model
-                    })
-                });
-
-                const data = await response.json();
-                if (data.status === 'success') {
-                    card.className = 'analysis-card completed';
-                    card.querySelector('.stage-content').innerHTML = `
-                        <div class="analysis-result">${data.result}</div>
-                        <div class="analysis-meta">
-                            <span class="analysis-time">${new Date().toLocaleTimeString()}</span>
-                        </div>
-                    `;
-                    completedStages++;
-                    
-                    // التحقق من اكتمال جميع المراحل
-                    if (completedStages === stages.length) {
-                        document.getElementById('success-message').style.display = 'block';
-                        // تمرير إلى رسالة النجاح
-                        document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
-                    }
-                } else {
-                    throw new Error(data.message);
-                }
-                return true;
-            } catch (error) {
-                card.className = 'analysis-card error';
-                card.querySelector('.stage-content').innerHTML = `
-                    <div class="error-message">حدث خطأ: ${error.message}</div>
-                    <button class="btn-retry" onclick="retryAnalysis(${stage.id})">إعادة المحاولة</button>
-                `;
-                return false;
-            }
-        }
-
-        async function startAnalysis() {
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
-
-            if (!title || !description) {
-                alert('يرجى ملء جميع الحقول المطلوبة');
-                return;
-            }
-
-            // تعطيل نموذج الإدخال
-            document.getElementById('title').disabled = true;
-            document.getElementById('description').disabled = true;
-            document.getElementById('startAnalysis').disabled = true;
-
-            // إعادة تعيين عداد المراحل المكتملة
-            completedStages = 0;
-            document.getElementById('success-message').style.display = 'none';
-
-            // بدء التحليل المتسلسل
-            for (const stage of stages) {
-                await analyzeStage(stage, { description });
-            }
-        }
-
-        async function retryAnalysis(stageId) {
-            const stage = stages.find(s => s.id === stageId);
-            const description = document.getElementById('description').value;
-            if (stage) {
-                await analyzeStage(stage, { description });
-            }
-        }
-
-        document.getElementById('startAnalysis').addEventListener('click', startAnalysis);
-    </script>
+    {% block scripts %}
+    <script src="{{ url_for('static', filename='js/pages/index.js') }}"></script>
+    {% endblock %}
 </body>
 </html>

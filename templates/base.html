@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحامي الذكي</title>
+    <title>{% block title %}المحامي الذكي{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     {% block styles %}{% endblock %}
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="المحامي الذكي - مساعدك القانوني الشخصي">
+    <meta name="keywords" content="محامي, قانون, استشارة قانونية, ذكاء اصطناعي">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <h1 class="header-title">المحامي الذكي</h1>
         <nav class="nav-container">
@@ -39,13 +52,42 @@
         </nav>
     </header>
 
-    {% block content %}{% endblock %}
+    <!-- Main Content -->
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
 
+    <!-- Footer -->
     <footer class="footer">
-        <p>جميع الحقوق محفوظة &copy; 2025 المحامي الذكي</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <a href="{{ url_for('home') }}">الرئيسية</a>
+                <a href="{{ url_for('chat.chat_page') }}">محادثة بناء القضية</a>
+                <a href="{{ url_for('document_analysis') }}">تحليل المستندات</a>
+            </div>
+            <div class="footer-section">
+                <h3>تواصل معنا</h3>
+                <p><i class="fas fa-envelope"></i> info@lawyer-ai.com</p>
+                <p><i class="fas fa-phone"></i> +970 59 000 0000</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>جميع الحقوق محفوظة &copy; {{ now.year }} المحامي الذكي</p>
+        </div>
     </footer>
 
+    <!-- JavaScript Files -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>
