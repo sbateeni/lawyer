@@ -1,26 +1,38 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المقالات القانونية</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>المقالات القانونية</h1>
-    </header>
-    <main>
-        <p>هنا يمكنك العثور على مجموعة من المقالات القانونية المهمة التي تغطي مواضيع متنوعة.</p>
-        <ul>
-            <li><a href="/legal_articles/human_rights">حقوق الإنسان في القانون الدولي</a>: مقال يتناول حقوق الإنسان وكيفية حمايتها.</li>
-            <li><a href="/legal_articles/arbitration">التحكيم كوسيلة لحل النزاعات</a>: مقال يشرح فوائد التحكيم في حل النزاعات القانونية.</li>
-            <li><a href="/legal_articles/labor_law_changes">أحدث التغييرات في قوانين العمل</a>: مقال يسلط الضوء على التغييرات الأخيرة في قوانين العمل.</li>
-            <li><a href="/legal_articles/legal_responsibility_doctors">المسؤولية القانونية للأطباء</a>: مقال يناقش المسؤولية القانونية التي يتحملها الأطباء.</li>
-        </ul>
-    </main>
-    <footer>
-        <p>حقوق النشر &copy; 2024</p>
-    </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}المقالات القانونية - المستشار القانوني{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="section-title text-center mb-5">المقالات القانونية</h1>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">حقوق الإنسان في القانون</h5>
+                    <p class="card-text">نظرة عامة على حقوق الإنسان في القانون الفلسطيني...</p>
+                    <a href="{{ url_for('human_rights') }}" class="btn btn-link">اقرأ المزيد</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">التحكيم التجاري</h5>
+                    <p class="card-text">دليلك الشامل حول التحكيم التجاري وإجراءاته...</p>
+                    <a href="{{ url_for('arbitration') }}" class="btn btn-link">اقرأ المزيد</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">قانون العمل الجديد</h5>
+                    <p class="card-text">أهم التغييرات في قانون العمل وتأثيرها...</p>
+                    <a href="{{ url_for('labor_law_changes') }}" class="btn btn-link">اقرأ المزيد</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

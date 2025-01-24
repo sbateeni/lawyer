@@ -1,300 +1,302 @@
-<!DOCTYPE html>
-<html dir="rtl" lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحامي الذكي</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        header nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        header nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            padding: 20px;
-        }
-        .case-analysis {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .case-form {
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button.btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button.btn:hover {
-            background-color: #218838;
-        }
-        .links {
-            margin-top: 20px;
-        }
-        .links ul {
-            list-style: none;
-            padding: 0;
-        }
-        .links ul li {
-            margin: 10px 0;
-        }
-        .links ul li a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .links ul li a:hover {
-            text-decoration: underline;
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-        .header-title {
-            font-size: 2em;
-            color: #2C3E50;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .nav-item {
-            font-size: 1.5em;
-            color: #34495E;
-            padding: 10px;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .nav-item:hover {
-            color: #2C3E50;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1 class="header-title">المحامي الذكي</h1>
-        <nav>
-            <a class="nav-item" href="{{ url_for('home') }}">الرئيسية</a>
-            <a class="nav-item" href="{{ url_for('chat.chat_page') }}">محادثة بناء القضية</a>
-            <a class="nav-item" href="{{ url_for('document_analysis') }}">تحليل المستندات</a>
-            <a class="nav-item" href="{{ url_for('legal_library.legal_library_page') }}">المكتبة القانونية</a>
-            <a class="nav-item" href="{{ url_for('law_information') }}">معلومات قانونية</a>
-            <a class="nav-item" href="{{ url_for('legal_resources') }}">مصادر قانونية</a>
-        </nav>
-    </header>
+{% extends "base.html" %}
 
-    <main>
-        <section class="case-analysis">
-            <h2>تحليل قضية جديدة</h2>
-            <div class="case-form">
-                <div class="form-group">
-                    <label for="title">عنوان القضية:</label>
-                    <input type="text" id="title" name="title" required>
-                </div>
-                <div class="form-group">
-                    <label for="description">وصف القضية:</label>
-                    <textarea id="description" name="description" rows="10" required 
-                        placeholder="يرجى وصف القضية بالتفصيل، متضمناً:
-- الوقائع والأحداث
-- الأطراف المعنية
-- التواريخ المطلوبة
-- الوثائق والمستندات المتوفرة
-- أي معلومات إضافية ذات صلة"></textarea>
-                </div>
-                <button type="button" id="startAnalysis" class="btn">بدء التحليل الشامل</button>
-            </div>
+{% block title %}المستشار القانوني - الصفحة الرئيسية{% endblock %}
 
-            <div id="success-message" class="success-message" style="display: none;">
-                <div class="success-content">
-                    <div class="success-icon">✓</div>
-                    <h3>تم إكمال التحليل بنجاح!</h3>
-                    <p>تم تحليل جميع المراحل الـ 14 بنجاح. يمكنك الآن مراجعة نتائج كل مرحلة أدناه.</p>
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="hero-content bg-white bg-opacity-10 p-5 rounded-4">
+                    <h1 class="display-4 mb-4 fw-bold text-white">المستشار القانوني الذكي</h1>
+                    <p class="lead mb-4 text-white opacity-90">منصة قانونية متكاملة مدعومة بالذكاء الاصطناعي لتحليل وفهم قضيتك القانونية</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('document_analysis') }}" class="btn btn-light btn-lg px-4 shadow-sm">
+                            <i class="fas fa-robot me-2"></i>تحليل المستندات
+                        </a>
+                        <a href="{{ url_for('case.new_case') }}" class="btn btn-light btn-lg px-4 shadow-sm">
+                            <i class="fas fa-gavel me-2"></i>تحليل القضية الشامل
+                        </a>
+                        <a href="{{ url_for('user_dashboard') }}" class="btn btn-outline-light btn-lg px-4 shadow-sm">
+                            <i class="fas fa-user me-2"></i>الملف الشخصي
+                        </a>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
 
-            <div class="analyses-list">
-                <!-- سيتم إضافة نتائج التحليل هنا -->
+<!-- AI Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5 text-dark">مميزات الذكاء الاصطناعي</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-brain fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title h5 text-dark">تحليل ذكي</h3>
+                        <p class="card-text text-muted">تحليل متقدم للقضايا القانونية باستخدام أحدث تقنيات الذكاء الاصطناعي</p>
+                    </div>
+                </div>
             </div>
-
-            <section class="links">
-                <h2>الصفحات القانونية</h2>
-                <ul>
-                    <li><a href="{{ url_for('legal_library.legal_library_page') }}">المكتبة القانونية</a></li>
-                    <li><a href="{{ url_for('document_analysis') }}">تحليل المستندات</a></li>
-                    <li><a href="{{ url_for('law_information') }}">معلومات قانونية</a></li>
-                    <li><a href="{{ url_for('legal_resources') }}">مصادر قانونية</a></li>
-                    <li><a href="{{ url_for('legal_documents') }}">الوثائق القانونية</a></li>
-                    <li><a href="{{ url_for('legal_articles') }}">المقالات القانونية</a></li>
-                    <li><a href="{{ url_for('appointment_management') }}">إدارة المواعيد</a></li>
-                    <li><a href="{{ url_for('faq') }}">الأسئلة الشائعة</a></li>
-                    <li><a href="{{ url_for('lawyer_rating') }}">تقييم المحامين</a></li>
-                    <li><a href="{{ url_for('contact') }}">صفحة الاتصال</a></li>
-                </ul>
-            </section>
-        </section>
-    </main>
-
-    <footer>
-        <p>جميع الحقوق محفوظة &copy; 2025</p>
-    </footer>
-
-    <script>
-        const stages = [
-            { id: 1, title: 'التحليل الأولي للنص', model: 'gemini' },
-            { id: 2, title: 'تحليل الوقائع والأحداث', model: 'llama' },
-            { id: 3, title: 'التحليل القانوني الأساسي', model: 'gemini' },
-            { id: 4, title: 'تحليل الأدلة والمستندات', model: 'llama' },
-            { id: 5, title: 'تحليل السوابق القضائية', model: 'gemini' },
-            { id: 6, title: 'تحليل الحجج القانونية', model: 'llama' },
-            { id: 7, title: 'تحليل الدفوع القانونية', model: 'gemini' },
-            { id: 8, title: 'التحليل الإجرائي', model: 'llama' },
-            { id: 9, title: 'صياغة الاستراتيجية القانونية', model: 'gemini' },
-            { id: 10, title: 'تحليل المخاطر والفرص', model: 'llama' },
-            { id: 11, title: 'اقتراح الحلول والبدائل', model: 'gemini' },
-            { id: 12, title: 'إعداد الملخص النهائي', model: 'llama' }
-        ];
-
-        const analysesList = document.querySelector('.analyses-list');
-        let currentCase = null;
-        let completedStages = 0;
-
-        // إنشاء بطاقات التحليل
-        stages.forEach(stage => {
-            const card = document.createElement('div');
-            card.className = 'analysis-card pending';
-            card.id = `stage-${stage.id}`;
-            card.innerHTML = `
-                <div class="stage-header">
-                    <h3>${stage.title}</h3>
-                    <span class="model-badge ${stage.model}">${stage.model === 'gemini' ? 'Google Gemini Pro' : 'Llama 3 (Groq)'}</span>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-bolt fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title h5 text-dark">استجابة فورية</h3>
+                        <p class="card-text text-muted">تحليل فوري للمستندات والقضايا مع توصيات قانونية سريعة</p>
+                    </div>
                 </div>
-                <div class="stage-content">
-                    <div class="stage-status">في انتظار التحليل...</div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shield-alt fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title h5 text-dark">خصوصية تامة</h3>
+                        <p class="card-text text-muted">حماية كاملة لبياناتك ومستنداتك مع تشفير متقدم</p>
+                    </div>
                 </div>
-            `;
-            analysesList.appendChild(card);
-        });
+            </div>
+        </div>
+    </div>
+</section>
 
-        async function analyzeStage(stage, caseData) {
-            const card = document.getElementById(`stage-${stage.id}`);
-            card.className = 'analysis-card processing';
-            card.querySelector('.stage-status').textContent = 'جاري التحليل...';
+<!-- How It Works Section -->
+<section class="how-it-works py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5 text-dark">كيف يعمل النظام؟</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="step-card text-center hover-card">
+                    <div class="step-number mb-3">1</div>
+                    <h4 class="h5 text-dark">رفع المستندات</h4>
+                    <p class="text-muted">قم برفع المستندات والوثائق المتعلقة بقضيتك</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card text-center hover-card">
+                    <div class="step-number mb-3">2</div>
+                    <h4 class="h5 text-dark">التحليل الذكي</h4>
+                    <p class="text-muted">يقوم النظام بتحليل المستندات وفهم تفاصيل القضية</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card text-center hover-card">
+                    <div class="step-number mb-3">3</div>
+                    <h4 class="h5 text-dark">التوصيات</h4>
+                    <p class="text-muted">الحصول على توصيات قانونية وخطوات عملية</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card text-center hover-card">
+                    <div class="step-number mb-3">4</div>
+                    <h4 class="h5 text-dark">المتابعة</h4>
+                    <p class="text-muted">متابعة تطورات القضية وتحديث التحليل</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-            try {
-                const response = await fetch('/api/analyze', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        text: caseData.description,
-                        stage: stage.id,
-                        model_type: stage.model
-                    })
-                });
+<!-- Resources Section -->
+<section class="resources-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5 text-dark">مصادر قانونية</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">المكتبة القانونية</h5>
+                        <p class="card-text text-muted">مجموعة شاملة من القوانين والتشريعات المحدثة</p>
+                        <a href="{{ url_for('legal_documents') }}" class="btn btn-outline-primary stretched-link">استعرض المكتبة</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">النماذج القانونية</h5>
+                        <p class="card-text text-muted">نماذج جاهزة للعقود والوثائق القانونية</p>
+                        <a href="{{ url_for('legal_models') }}" class="btn btn-outline-primary stretched-link">استعرض النماذج</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">المقالات القانونية</h5>
+                        <p class="card-text text-muted">مقالات توعوية وشروحات قانونية مفصلة</p>
+                        <a href="{{ url_for('legal_articles') }}" class="btn btn-outline-primary stretched-link">اقرأ المقالات</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-                const data = await response.json();
-                if (data.status === 'success') {
-                    card.className = 'analysis-card completed';
-                    card.querySelector('.stage-content').innerHTML = `
-                        <div class="analysis-result">${data.result}</div>
-                        <div class="analysis-meta">
-                            <span class="analysis-time">${new Date().toLocaleTimeString()}</span>
-                        </div>
-                    `;
-                    completedStages++;
-                    
-                    // التحقق من اكتمال جميع المراحل
-                    if (completedStages === stages.length) {
-                        document.getElementById('success-message').style.display = 'block';
-                        // تمرير إلى رسالة النجاح
-                        document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
-                    }
-                } else {
-                    throw new Error(data.message);
-                }
-                return true;
-            } catch (error) {
-                card.className = 'analysis-card error';
-                card.querySelector('.stage-content').innerHTML = `
-                    <div class="error-message">حدث خطأ: ${error.message}</div>
-                    <button class="btn-retry" onclick="retryAnalysis(${stage.id})">إعادة المحاولة</button>
-                `;
-                return false;
-            }
-        }
+<!-- Quick Links Section -->
+<section class="quick-links-section py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5 text-dark">روابط سريعة</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('case.new_case') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-gavel me-2"></i>تحليل القضية
+                    </a>
+                    <a href="{{ url_for('legal_documents') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-book me-2"></i>المكتبة القانونية
+                    </a>
+                    <a href="{{ url_for('faq') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-question-circle me-2"></i>الأسئلة الشائعة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
 
-        async function startAnalysis() {
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
+{% block extra_css %}
+<style>
+    :root {
+        --palestinian-green: #149954;
+        --palestinian-red: #E4312B;
+        --palestinian-black: #000000;
+        --palestinian-white: #FFFFFF;
+    }
 
-            if (!title || !description) {
-                alert('يرجى ملء جميع الحقول المطلوبة');
-                return;
-            }
+    .hero-section {
+        background: linear-gradient(135deg, var(--palestinian-green) 0%, #0d6e3c 100%);
+        padding: 100px 0;
+        margin-top: -1.5rem;
+        position: relative;
+    }
 
-            // تعطيل نموذج الإدخال
-            document.getElementById('title').disabled = true;
-            document.getElementById('description').disabled = true;
-            document.getElementById('startAnalysis').disabled = true;
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-            // إعادة تعيين عداد المراحل المكتملة
-            completedStages = 0;
-            document.getElementById('success-message').style.display = 'none';
+    .hero-section h1,
+    .hero-section p {
+        color: var(--palestinian-white) !important;
+        position: relative;
+        z-index: 2;
+    }
 
-            // بدء التحليل المتسلسل
-            for (const stage of stages) {
-                await analyzeStage(stage, { description });
-            }
-        }
+    .hero-section .btn {
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
 
-        async function retryAnalysis(stageId) {
-            const stage = stages.find(s => s.id === stageId);
-            const description = document.getElementById('description').value;
-            if (stage) {
-                await analyzeStage(stage, { description });
-            }
-        }
+    .hero-section .btn-light {
+        background-color: var(--palestinian-white);
+        border-color: var(--palestinian-white);
+        color: var(--palestinian-green);
+    }
 
-        document.getElementById('startAnalysis').addEventListener('click', startAnalysis);
-    </script>
-</body>
-</html>
+    .hero-section .btn-light:hover {
+        background-color: var(--palestinian-green);
+        border-color: var(--palestinian-white);
+        color: var(--palestinian-white);
+        transform: translateY(-3px);
+    }
+
+    .hero-section .btn-outline-light:hover {
+        background-color: var(--palestinian-white);
+        color: var(--palestinian-green);
+        transform: translateY(-3px);
+    }
+
+    .text-primary {
+        color: var(--palestinian-green) !important;
+    }
+
+    .bg-primary {
+        background-color: var(--palestinian-green) !important;
+    }
+
+    .btn-primary {
+        background-color: var(--palestinian-green) !important;
+        border-color: var(--palestinian-green) !important;
+    }
+
+    .btn-outline-primary {
+        color: var(--palestinian-green) !important;
+        border-color: var(--palestinian-green) !important;
+        background-color: var(--palestinian-white) !important;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--palestinian-green) !important;
+        color: var(--palestinian-white) !important;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        background-color: var(--palestinian-green);
+        color: var(--palestinian-white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin: 0 auto;
+    }
+
+    .step-card {
+        padding: 20px;
+        background-color: var(--palestinian-white);
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .hover-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        border-bottom: 3px solid var(--palestinian-green);
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .text-dark {
+        color: #2c3e50 !important;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+
+    .fa-3x {
+        color: var(--palestinian-green);
+    }
+
+    .stretched-link::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        content: "";
+    }
+</style>
+{% endblock %}

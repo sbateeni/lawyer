@@ -22,6 +22,8 @@ try:
     from routes.document_analysis_routes import document_analysis_bp
     from routes.document_information_routes import document_information_bp
     from routes.legal_library_routes import legal_library_bp
+    from routes.case_routes import case_bp
+    from routes.verification_routes import verification_bp
     
     print("Importing chat routes...")
     from chat_builder.routes.chat_routes import chat_bp
@@ -43,10 +45,11 @@ try:
     app.register_blueprint(document_analysis_bp)
     app.register_blueprint(document_information_bp)
     app.register_blueprint(legal_library_bp)
+    app.register_blueprint(case_bp)
+    app.register_blueprint(verification_bp)
 
     @app.route('/')
     def home():
-        print("Accessing index route...")
         return render_template('index.html')
 
     @app.route('/index')
@@ -129,9 +132,54 @@ try:
     def document_analysis():
         return render_template('document_analysis.html')
 
+    @app.route('/login')
+    def login():
+        return render_template('auth/login.html')
+
+    @app.route('/register')
+    def register():
+        return render_template('auth/register.html')
+
+    @app.route('/user/dashboard')
+    def user_dashboard():
+        # بيانات تجريبية
+        user = {
+            'name': 'مستخدم تجريبي',
+            'email': 'user@example.com'
+        }
+        stats = {
+            'analysis_count': 5,
+            'documents_count': 3,
+            'consultations_count': 2
+        }
+        recent_analyses = [
+            {
+                'date': '2024-03-20',
+                'type': 'تحليل عقد',
+                'result': 'مكتمل'
+            },
+            {
+                'date': '2024-03-18',
+                'type': 'تحليل قضية',
+                'result': 'قيد المراجعة'
+            }
+        ]
+        return render_template('user_dashboard.html', 
+                             user=user, 
+                             stats=stats, 
+                             recent_analyses=recent_analyses)
+
     if __name__ == '__main__':
-        print("Starting Flask server...")
-        app.run(debug=True, host='0.0.0.0', port=5000)
+        try:
+            print("Starting Flask server...")
+            print("Debug mode: enabled")
+            print("Host: 0.0.0.0")
+            print("Port: 5001")
+            app.run(debug=True, host='0.0.0.0', port=5001)
+        except Exception as e:
+            print("Error starting server:")
+            print(str(e))
+            print(traceback.format_exc())
 
 except Exception as e:
     print("Error occurred:")

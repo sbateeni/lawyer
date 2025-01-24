@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}لوحة التحكم - المستشار القانوني{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- القائمة الجانبية -->
+        <div class="col-lg-3">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <div class="avatar mb-3">
+                            <i class="fas fa-user-circle fa-4x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">مرحباً، {{ user.name }}</h5>
+                    </div>
+                    <div class="list-group">
+                        <a href="#overview" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                            <i class="fas fa-home me-2"></i>نظرة عامة
+                        </a>
+                        <a href="#my-cases" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-gavel me-2"></i>قضاياي
+                        </a>
+                        <a href="#analysis-history" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-history me-2"></i>سجل التحليلات
+                        </a>
+                        <a href="#saved-documents" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-file-alt me-2"></i>المستندات المحفوظة
+                        </a>
+                        <a href="#settings" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-cog me-2"></i>الإعدادات
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="col-lg-9">
+            <div class="tab-content">
+                <!-- نظرة عامة -->
+                <div class="tab-pane fade show active" id="overview">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">ملخص النشاط</h5>
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="stats-card bg-light p-3 rounded">
+                                        <h6>التحليلات</h6>
+                                        <h3 class="mb-0">{{ stats.analysis_count }}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stats-card bg-light p-3 rounded">
+                                        <h6>المستندات</h6>
+                                        <h3 class="mb-0">{{ stats.documents_count }}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stats-card bg-light p-3 rounded">
+                                        <h6>الاستشارات</h6>
+                                        <h3 class="mb-0">{{ stats.consultations_count }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">آخر التحليلات</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>التاريخ</th>
+                                            <th>نوع التحليل</th>
+                                            <th>النتيجة</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for analysis in recent_analyses %}
+                                        <tr>
+                                            <td>{{ analysis.date }}</td>
+                                            <td>{{ analysis.type }}</td>
+                                            <td>
+                                                <span class="badge bg-success">{{ analysis.result }}</span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">عرض التفاصيل</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قضاياي -->
+                <div class="tab-pane fade" id="my-cases">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">قضاياي</h5>
+                            <div class="cases-list">
+                                {% for case in cases %}
+                                <div class="case-item p-3 border-bottom">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">{{ case.title }}</h6>
+                                            <p class="text-muted mb-0">تاريخ التحليل: {{ case.date }}</p>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-primary">عرض التحليل</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- سجل التحليلات -->
+                <div class="tab-pane fade" id="analysis-history">
+                    <!-- محتوى سجل التحليلات -->
+                </div>
+
+                <!-- المستندات المحفوظة -->
+                <div class="tab-pane fade" id="saved-documents">
+                    <!-- محتوى المستندات المحفوظة -->
+                </div>
+
+                <!-- الإعدادات -->
+                <div class="tab-pane fade" id="settings">
+                    <!-- محتوى الإعدادات -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .avatar {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        color: var(--primary-color);
+    }
+
+    .stats-card {
+        transition: transform 0.3s ease;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .case-item {
+        transition: background-color 0.3s ease;
+    }
+
+    .case-item:hover {
+        background-color: var(--light-bg);
+    }
+</style>
+{% endblock %} 

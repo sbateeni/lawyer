@@ -1,33 +1,297 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تقييم المحامين</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>تقييم المحامين</h1>
-    </header>
-    <main>
-        <form>
-            <label for="rating">التقييم:</label>
-            <select id="rating" name="rating">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <label for="comments">التعليقات:</label>
-            <textarea id="comments" name="comments" required></textarea>
-            <input type="submit" value="إرسال التقييم">
-        </form>
-        <p>نحن نقدر ملاحظاتك لتحسين خدماتنا.</p>
-    </main>
-    <footer>
-        <p>حقوق النشر &copy; 2024</p>
-    </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}تقييم المحامين - المستشار القانوني{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="section-title text-center mb-5">تقييم المحامين</h1>
+
+    <!-- قسم البحث والتصفية -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="ابحث عن محامي...">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option value="">التخصص القانوني</option>
+                        <option value="civil">قانون مدني</option>
+                        <option value="criminal">قانون جنائي</option>
+                        <option value="commercial">قانون تجاري</option>
+                        <option value="family">قانون أسرة</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option value="">ترتيب حسب</option>
+                        <option value="rating">التقييم الأعلى</option>
+                        <option value="experience">الخبرة</option>
+                        <option value="cases">عدد القضايا</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- قائمة المحامين -->
+    <div class="row g-4">
+        <!-- بطاقة المحامي 1 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 lawyer-card">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <div class="lawyer-avatar mb-3">
+                            <i class="fas fa-user-tie fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">أ. محمد أحمد</h5>
+                        <div class="lawyer-rating mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                            <span class="ms-2">(4.5)</span>
+                        </div>
+                        <p class="text-muted">متخصص في القانون المدني</p>
+                    </div>
+                    <div class="lawyer-stats d-flex justify-content-around mb-3">
+                        <div class="text-center">
+                            <div class="h5 mb-0">15</div>
+                            <small class="text-muted">سنوات الخبرة</small>
+                        </div>
+                        <div class="text-center">
+                            <div class="h5 mb-0">250+</div>
+                            <small class="text-muted">قضية ناجحة</small>
+                        </div>
+                        <div class="text-center">
+                            <div class="h5 mb-0">98%</div>
+                            <small class="text-muted">رضا العملاء</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#ratingModal">
+                        <i class="fas fa-star me-2"></i>قيّم المحامي
+                    </button>
+                    <button class="btn btn-outline-primary w-100">
+                        <i class="fas fa-calendar-plus me-2"></i>احجز موعداً
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة المحامي 2 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 lawyer-card">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <div class="lawyer-avatar mb-3">
+                            <i class="fas fa-user-tie fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">أ. سارة محمود</h5>
+                        <div class="lawyer-rating mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
+                            <span class="ms-2">(4.0)</span>
+                        </div>
+                        <p class="text-muted">متخصصة في قانون الأسرة</p>
+                    </div>
+                    <div class="lawyer-stats d-flex justify-content-around mb-3">
+                        <div class="text-center">
+                            <div class="h5 mb-0">10</div>
+                            <small class="text-muted">سنوات الخبرة</small>
+                        </div>
+                        <div class="text-center">
+                            <div class="h5 mb-0">180+</div>
+                            <small class="text-muted">قضية ناجحة</small>
+                        </div>
+                        <div class="text-center">
+                            <div class="h5 mb-0">95%</div>
+                            <small class="text-muted">رضا العملاء</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#ratingModal">
+                        <i class="fas fa-star me-2"></i>قيّم المحامي
+                    </button>
+                    <button class="btn btn-outline-primary w-100">
+                        <i class="fas fa-calendar-plus me-2"></i>احجز موعداً
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة المحامي 3 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 lawyer-card">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <div class="lawyer-avatar mb-3">
+                            <i class="fas fa-user-tie fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">أ. أحمد خالد</h5>
+                        <div class="lawyer-rating mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <span class="ms-2">(5.0)</span>
+                        </div>
+                        <p class="text-muted">متخصص في القانون التجاري</p>
+                    </div>
+                    <div class="lawyer-stats d-flex justify-content-around mb-3">
+                        <div class="text-center">
+                            <div class="h5 mb-0">20</div>
+                            <small class="text-muted">سنوات الخبرة</small>
+                        </div>
+                        <div class="text-center">
+                            <div class="h5 mb-0">300+</div>
+                            <small class="text-muted">قضية ناجحة</small>
+                        </div>
+                        <div class="text-center">
+                            <div class="h5 mb-0">99%</div>
+                            <small class="text-muted">رضا العملاء</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#ratingModal">
+                        <i class="fas fa-star me-2"></i>قيّم المحامي
+                    </button>
+                    <button class="btn btn-outline-primary w-100">
+                        <i class="fas fa-calendar-plus me-2"></i>احجز موعداً
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal التقييم -->
+<div class="modal fade" id="ratingModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تقييم المحامي</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="ratingForm">
+                    <div class="mb-3">
+                        <label class="form-label">التقييم</label>
+                        <div class="rating-stars mb-2">
+                            <i class="far fa-star fa-2x" data-rating="1"></i>
+                            <i class="far fa-star fa-2x" data-rating="2"></i>
+                            <i class="far fa-star fa-2x" data-rating="3"></i>
+                            <i class="far fa-star fa-2x" data-rating="4"></i>
+                            <i class="far fa-star fa-2x" data-rating="5"></i>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">تعليقك</label>
+                        <textarea class="form-control" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary">إرسال التقييم</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .lawyer-card {
+        transition: transform 0.3s ease;
+    }
+
+    .lawyer-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .lawyer-avatar {
+        width: 80px;
+        height: 80px;
+        background-color: var(--light-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: var(--primary-color);
+    }
+
+    .lawyer-rating {
+        font-size: 1.1rem;
+    }
+
+    .rating-stars i {
+        cursor: pointer;
+        color: #ffc107;
+        margin: 0 5px;
+    }
+
+    .lawyer-stats {
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        padding: 15px 0;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تفعيل نظام التقييم بالنجوم
+    const ratingStars = document.querySelectorAll('.rating-stars i');
+    ratingStars.forEach(star => {
+        star.addEventListener('mouseover', function() {
+            const rating = this.dataset.rating;
+            updateStars(rating);
+        });
+        
+        star.addEventListener('mouseout', function() {
+            resetStars();
+        });
+        
+        star.addEventListener('click', function() {
+            const rating = this.dataset.rating;
+            setRating(rating);
+        });
+    });
+
+    function updateStars(rating) {
+        ratingStars.forEach(star => {
+            const starRating = star.dataset.rating;
+            if (starRating <= rating) {
+                star.classList.remove('far');
+                star.classList.add('fas');
+            } else {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            }
+        });
+    }
+
+    function resetStars() {
+        ratingStars.forEach(star => {
+            star.classList.remove('fas');
+            star.classList.add('far');
+        });
+    }
+
+    function setRating(rating) {
+        console.log('Rating set to:', rating);
+        // هنا يمكن إضافة كود لحفظ التقييم
+    }
+});
+</script>
+{% endblock %}
