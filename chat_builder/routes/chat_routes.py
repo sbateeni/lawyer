@@ -98,27 +98,35 @@ def chat():
         if 'gemini' in models:
             try:
                 gemini_response = models['gemini'].generate_content(prompts['gemini'])
-                responses.append(f"🤖 Gemini يقول:\n{gemini_response.text}\n")
+                print(gemini_response)  # طباعة محتوى الاستجابة
+                print(dir(gemini_response))  # طباعة الخصائص المتاحة في الكائن
+                if gemini_response and hasattr(gemini_response, 'text'):
+                    responses.append(f"🤖 Gemini يقول:\n{gemini_response.text}\n")
+                elif hasattr(gemini_response, 'content'):
+                    responses.append(f"🤖 Gemini يقول:\n{gemini_response.content}\n")
+                else:
+                    responses.append("🤖 Gemini لم يتمكن من تقديم رد.")
             except Exception as e:
-                print(f"Gemini error: {e}")
+                responses.append(f"🤖 Gemini حدث خطأ: {str(e)}")
         
         # الحصول على رد من Llama
         if 'llama' in models:
             try:
-                llama_completion = models['llama'].chat.completions.create(
+                completion = models['llama'].chat.completions.create(
                     messages=[{
                         "role": "user",
                         "content": prompts['llama']
                     }],
-                    model="llama3-groq-70b-8192-tool-use-preview",
-                    temperature=0.7,
-                    max_tokens=4096,
-                    top_p=0.9,
-                    stream=False
+                    model="llama-3.3-70b-versatile",
+                    temperature=1,
+                    max_tokens=1024,
+                    top_p=1,
+                    stream=False,
+                    stop=None
                 )
-                responses.append(f"🦙 Llama يقول:\n{llama_completion.choices[0].message.content}\n")
+                responses.append(f"🤖 Llama يقول:\n{completion['choices'][0]['message']['content']}\n")
             except Exception as e:
-                print(f"Llama error: {e}")
+                responses.append(f"🤖 Llama حدث خطأ: {str(e)}")
         
         if responses:
             combined_response = "\n".join(responses)

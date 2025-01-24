@@ -2,6 +2,7 @@ import os
 import sys
 import traceback
 import importlib
+from datetime import datetime
 
 # إضافة مسار المشروع إلى sys.path
 project_root = os.path.dirname(os.path.abspath(__file__))
@@ -47,6 +48,16 @@ try:
     app.register_blueprint(legal_library_bp)
     app.register_blueprint(case_bp)
     app.register_blueprint(verification_bp)
+<<<<<<< HEAD
+=======
+
+    # Context Processors
+    @app.context_processor
+    def utility_processor():
+        return {
+            'now': datetime.now()
+        }
+>>>>>>> 832bdbdcf9ec3e65d082c59a4cd4f79539798575
 
     @app.route('/')
     def home():
@@ -132,6 +143,10 @@ try:
     def document_analysis():
         return render_template('document_analysis.html')
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 832bdbdcf9ec3e65d082c59a4cd4f79539798575
     @app.route('/login')
     def login():
         return render_template('auth/login.html')
@@ -168,6 +183,18 @@ try:
                              user=user, 
                              stats=stats, 
                              recent_analyses=recent_analyses)
+<<<<<<< HEAD
+=======
+=======
+    @app.route('/analyze')
+    def analyze_case():
+        return render_template('analyze.html')
+
+    @app.route('/legal-library')
+    def legal_library():
+        return render_template('legal_library.html')
+>>>>>>> 617fa18f726f9f4b38c98b82f3cd130d307a4269
+>>>>>>> 832bdbdcf9ec3e65d082c59a4cd4f79539798575
 
     if __name__ == '__main__':
         try:

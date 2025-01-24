@@ -110,10 +110,21 @@ def analyze():
                     "content": prompt
                 }],
                 model="llama-3.3-70b-versatile",
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 832bdbdcf9ec3e65d082c59a4cd4f79539798575
                 temperature=0.7,
                 max_tokens=4096,
                 top_p=0.9,
                 stream=False
+=======
+                temperature=1,
+                max_tokens=1024,
+                top_p=1,
+                stream=False,
+                stop=None
+>>>>>>> 617fa18f726f9f4b38c98b82f3cd130d307a4269
             )
             result = completion.choices[0].message.content
         

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analyze.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="main-container">
+    <section class="case-analysis">
+        <h2>تحليل قضية جديدة</h2>
+        <div class="case-form">
+            <div class="form-group">
+                <label for="title">عنوان القضية:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">وصف القضية:</label>
+                <textarea id="description" name="description" rows="10" required 
+                    placeholder="يرجى وصف القضية بالتفصيل، متضمناً:
+- الوقائع والأحداث
+- الأطراف المعنية
+- التواريخ المطلوبة
+- الوثائق والمستندات المتوفرة
+- أي معلومات إضافية ذات صلة"></textarea>
+            </div>
+            <button type="button" id="startAnalysis" class="btn">بدء التحليل الشامل</button>
+        </div>
+
+        <div id="success-message" class="success-message" style="display: none;">
+            <div class="success-content">
+                <div class="success-icon">✓</div>
+                <h3>تم إكمال التحليل بنجاح!</h3>
+                <p>تم تحليل جميع المراحل الـ 14 بنجاح. يمكنك الآن مراجعة نتائج كل مرحلة أدناه.</p>
+            </div>
+        </div>
+
+        <div class="analyses-list">
+            <!-- سيتم إضافة نتائج التحليل هنا -->
+        </div>
+
+        <section class="links">
+            <h2>الصفحات القانونية</h2>
+            <ul>
+                <li><a href="{{ url_for('legal_library.legal_library_page') }}">المكتبة القانونية</a></li>
+                <li><a href="{{ url_for('document_analysis') }}">تحليل المستندات</a></li>
+                <li><a href="{{ url_for('law_information') }}">معلومات قانونية</a></li>
+                <li><a href="{{ url_for('legal_resources') }}">مصادر قانونية</a></li>
+                <li><a href="{{ url_for('legal_documents') }}">الوثائق القانونية</a></li>
+                <li><a href="{{ url_for('legal_articles') }}">المقالات القانونية</a></li>
+                <li><a href="{{ url_for('appointment_management') }}">إدارة المواعيد</a></li>
+                <li><a href="{{ url_for('faq') }}">الأسئلة الشائعة</a></li>
+                <li><a href="{{ url_for('lawyer_rating') }}">تقييم المحامين</a></li>
+                <li><a href="{{ url_for('contact') }}">صفحة الاتصال</a></li>
+            </ul>
+        </section>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+{% endblock %}

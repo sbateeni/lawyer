@@ -1,26 +1,37 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموارد القانونية</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header>
+{% extends "base.html" %}
+
+{% block title %}الموارد القانونية - المحامي الذكي{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/legal_resources.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
         <h1>الموارد القانونية</h1>
-    </header>
-    <main>
-        <ul>
-            <li><strong>دليل المحامي الشامل</strong>: كتاب يحتوي على معلومات شاملة عن حقوق المحامين وواجباتهم.</li>
-            <li><strong>قوانين العمل</strong>: مجموعة من القوانين المتعلقة بحقوق العمال وواجبات أصحاب العمل.</li>
-            <li><strong>الاستشارات القانونية عبر الإنترنت</strong>: خدمة تقدم استشارات قانونية مجانية عبر الإنترنت.</li>
-            <li><strong>مقالات قانونية</strong>: مجموعة من المقالات التي تتناول مواضيع قانونية متنوعة.</li>
+        <p>استعرض مجموعة شاملة من الموارد القانونية المتاحة</p>
+    </div>
+</section>
+
+<!-- Resources Section -->
+<section class="resources">
+    <div class="container">
+        <h2 class="section-title">الموارد المتاحة</h2>
+        <ul class="resources-list">
+            <li><a href="#">دليل المحامي الشامل</a></li>
+            <li><a href="#">قوانين العمل</a></li>
+            <li><a href="#">الاستشارات القانونية عبر الإنترنت</a></li>
+            <li><a href="#">مقالات قانونية</a></li>
         </ul>
         <p>هنا يمكنك العثور على موارد قانونية مفيدة. ويتم احضارها من نماذج الذكاء الاصطناعي مع حفظها حتى لا تحذف.</p>
-    </main>
-    <footer>
-        <p>حقوق النشر &copy; 2024</p>
-    </footer>
-</body>
-</html>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/pages/legal_resources.js') }}"></script>
+{% endblock %}
