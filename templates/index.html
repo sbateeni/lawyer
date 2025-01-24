@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+
+{% block title %}المستشار القانوني - الصفحة الرئيسية{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="hero-content bg-white bg-opacity-10 p-5 rounded-4">
+                    <h1 class="display-4 mb-4 fw-bold text-white">المستشار القانوني الذكي</h1>
+                    <p class="lead mb-4 text-white opacity-90">منصة قانونية متكاملة مدعومة بالذكاء الاصطناعي لتحليل وفهم قضيتك القانونية</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('document_analysis') }}" class="btn btn-light btn-lg px-4 shadow-sm">
+                            <i class="fas fa-robot me-2"></i>تحليل المستندات
+                        </a>
+                        <a href="{{ url_for('case.new_case') }}" class="btn btn-light btn-lg px-4 shadow-sm">
+                            <i class="fas fa-gavel me-2"></i>تحليل القضية الشامل
+                        </a>
+                        <a href="{{ url_for('user_dashboard') }}" class="btn btn-outline-light btn-lg px-4 shadow-sm">
+                            <i class="fas fa-user me-2"></i>الملف الشخصي
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5 text-dark">مميزات الذكاء الاصطناعي</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-brain fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title h5 text-dark">تحليل ذكي</h3>
+                        <p class="card-text text-muted">تحليل متقدم للقضايا القانونية باستخدام أحدث تقنيات الذكاء الاصطناعي</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-bolt fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title h5 text-dark">استجابة فورية</h3>
+                        <p class="card-text text-muted">تحليل فوري للمستندات والقضايا مع توصيات قانونية سريعة</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shield-alt fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title h5 text-dark">خصوصية تامة</h3>
+                        <p class="card-text text-muted">حماية كاملة لبياناتك ومستنداتك مع تشفير متقدم</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5 text-dark">كيف يعمل النظام؟</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="step-card text-center hover-card">
+                    <div class="step-number mb-3">1</div>
+                    <h4 class="h5 text-dark">رفع المستندات</h4>
+                    <p class="text-muted">قم برفع المستندات والوثائق المتعلقة بقضيتك</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card text-center hover-card">
+                    <div class="step-number mb-3">2</div>
+                    <h4 class="h5 text-dark">التحليل الذكي</h4>
+                    <p class="text-muted">يقوم النظام بتحليل المستندات وفهم تفاصيل القضية</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card text-center hover-card">
+                    <div class="step-number mb-3">3</div>
+                    <h4 class="h5 text-dark">التوصيات</h4>
+                    <p class="text-muted">الحصول على توصيات قانونية وخطوات عملية</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card text-center hover-card">
+                    <div class="step-number mb-3">4</div>
+                    <h4 class="h5 text-dark">المتابعة</h4>
+                    <p class="text-muted">متابعة تطورات القضية وتحديث التحليل</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Resources Section -->
+<section class="resources-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5 text-dark">مصادر قانونية</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">المكتبة القانونية</h5>
+                        <p class="card-text text-muted">مجموعة شاملة من القوانين والتشريعات المحدثة</p>
+                        <a href="{{ url_for('legal_documents') }}" class="btn btn-outline-primary stretched-link">استعرض المكتبة</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">النماذج القانونية</h5>
+                        <p class="card-text text-muted">نماذج جاهزة للعقود والوثائق القانونية</p>
+                        <a href="{{ url_for('legal_models') }}" class="btn btn-outline-primary stretched-link">استعرض النماذج</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">المقالات القانونية</h5>
+                        <p class="card-text text-muted">مقالات توعوية وشروحات قانونية مفصلة</p>
+                        <a href="{{ url_for('legal_articles') }}" class="btn btn-outline-primary stretched-link">اقرأ المقالات</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Links Section -->
+<section class="quick-links-section py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5 text-dark">روابط سريعة</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('case.new_case') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-gavel me-2"></i>تحليل القضية
+                    </a>
+                    <a href="{{ url_for('legal_documents') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-book me-2"></i>المكتبة القانونية
+                    </a>
+                    <a href="{{ url_for('faq') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-question-circle me-2"></i>الأسئلة الشائعة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --palestinian-green: #149954;
+        --palestinian-red: #E4312B;
+        --palestinian-black: #000000;
+        --palestinian-white: #FFFFFF;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, var(--palestinian-green) 0%, #0d6e3c 100%);
+        padding: 100px 0;
+        margin-top: -1.5rem;
+        position: relative;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-section h1,
+    .hero-section p {
+        color: var(--palestinian-white) !important;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-section .btn {
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+
+    .hero-section .btn-light {
+        background-color: var(--palestinian-white);
+        border-color: var(--palestinian-white);
+        color: var(--palestinian-green);
+    }
+
+    .hero-section .btn-light:hover {
+        background-color: var(--palestinian-green);
+        border-color: var(--palestinian-white);
+        color: var(--palestinian-white);
+        transform: translateY(-3px);
+    }
+
+    .hero-section .btn-outline-light:hover {
+        background-color: var(--palestinian-white);
+        color: var(--palestinian-green);
+        transform: translateY(-3px);
+    }
+
+    .text-primary {
+        color: var(--palestinian-green) !important;
+    }
+
+    .bg-primary {
+        background-color: var(--palestinian-green) !important;
+    }
+
+    .btn-primary {
+        background-color: var(--palestinian-green) !important;
+        border-color: var(--palestinian-green) !important;
+    }
+
+    .btn-outline-primary {
+        color: var(--palestinian-green) !important;
+        border-color: var(--palestinian-green) !important;
+        background-color: var(--palestinian-white) !important;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--palestinian-green) !important;
+        color: var(--palestinian-white) !important;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        background-color: var(--palestinian-green);
+        color: var(--palestinian-white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin: 0 auto;
+    }
+
+    .step-card {
+        padding: 20px;
+        background-color: var(--palestinian-white);
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .hover-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        border-bottom: 3px solid var(--palestinian-green);
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .text-dark {
+        color: #2c3e50 !important;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+
+    .fa-3x {
+        color: var(--palestinian-green);
+    }
+
+    .stretched-link::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        content: "";
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}المقالات القانونية - المستشار القانوني{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="section-title text-center mb-5">المقالات القانونية</h1>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">حقوق الإنسان في القانون</h5>
+                    <p class="card-text">نظرة عامة على حقوق الإنسان في القانون الفلسطيني...</p>
+                    <a href="{{ url_for('human_rights') }}" class="btn btn-link">اقرأ المزيد</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">التحكيم التجاري</h5>
+                    <p class="card-text">دليلك الشامل حول التحكيم التجاري وإجراءاته...</p>
+                    <a href="{{ url_for('arbitration') }}" class="btn btn-link">اقرأ المزيد</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">قانون العمل الجديد</h5>
+                    <p class="card-text">أهم التغييرات في قانون العمل وتأثيرها...</p>
+                    <a href="{{ url_for('labor_law_changes') }}" class="btn btn-link">اقرأ المزيد</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

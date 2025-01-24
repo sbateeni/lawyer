@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بناء القضية - المحامي الذكي</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+</head>
+<body>
+    <header>
+        <h1>المحامي الذكي - بناء القضية</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">الرئيسية</a>
+            <a href="{{ url_for('case.cases') }}">القضايا</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="chat-container">
+            <div class="chat-header">
+                <h2>محادثة بناء القضية</h2>
+                <div class="model-selector">
+                    <label for="model">نموذج المحادثة:</label>
+                    <select id="model" name="model">
+                        {% if 'gemini' in available_models %}
+                        <option value="gemini">Google Gemini Pro</option>
+                        {% endif %}
+                        {% if 'llama' in available_models %}
+                        <option value="llama">Llama 3 (Groq)</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <!-- ستتم إضافة الرسائل هنا -->
+            </div>
+
+            <div class="chat-input">
+                <textarea id="userInput" placeholder="اكتب رسالتك هنا..." rows="3"></textarea>
+                <button id="sendMessage" class="btn">إرسال</button>
+            </div>
+
+            <div class="case-summary" id="caseSummary" style="display: none;">
+                <h3>ملخص القضية</h3>
+                <div class="summary-content" id="summaryContent"></div>
+                <div class="summary-actions">
+                    <button id="copyCase" class="btn">نسخ القضية</button>
+                    <button id="startAnalysis" class="btn">بدء التحليل</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2024</p>
+    </footer>
+
+    <script>
+        let currentStage = 'initial';
+        let caseData = {
+            type: '',
+            parties: [],
+            facts: '',
+            documents: [],
+            additionalInfo: ''
+        };
+
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendMessage = document.getElementById('sendMessage');
+        const modelSelect = document.getElementById('model');
+        const caseSummary = document.getElementById('caseSummary');
+        const summaryContent = document.getElementById('summaryContent');
+        const copyCase = document.getElementById('copyCase');
+        const startAnalysis = document.getElementById('startAnalysis');
+
+        // إضافة رسالة إلى المحادثة
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.innerHTML = `
+                <div class="message-content">${content}</div>
+                <div class="message-time">${new Date().toLocaleTimeString()}</div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // إرسال رسالة إلى الخادم
+        async function sendToBot(message, stage = currentStage) {
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        stage: stage,
+                        model_type: modelSelect.value
+                    })
+                });
+
+                const data = await response.json();
+                if (data.status === 'success') {
+                    addMessage(data.result);
+                    updateCaseData(message, stage);
+                } else {
+                    addMessage('عذراً، حدث خطأ في معالجة رسالتك.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('عذراً، حدث خطأ في الاتصال بالخادم.');
+            }
+        }
+
+        // تحديث بيانات القضية
+        function updateCaseData(message, stage) {
+            switch (stage) {
+                case 'initial':
+                    caseData.type = message;
+                    currentStage = 'parties';
+                    break;
+                case 'parties':
+                    caseData.parties.push(message);
+                    currentStage = 'facts';
+                    break;
+                case 'facts':
+                    caseData.facts = message;
+                    currentStage = 'documents';
+                    break;
+                case 'documents':
+                    caseData.documents.push(message);
+                    currentStage = 'completion_check';
+                    break;
+                case 'completion_check':
+                    caseData.additionalInfo = message;
+                    updateSummary();
+                    break;
+            }
+        }
+
+        // تحديث ملخص القضية
+        function updateSummary() {
+            const summary = `
+                <h4>نوع القضية:</h4>
+                <p>${caseData.type}</p>
+                
+                <h4>الأطراف:</h4>
+                <ul>
+                    ${caseData.parties.map(party => `<li>${party}</li>`).join('')}
+                </ul>
+                
+                <h4>الوقائع:</h4>
+                <p>${caseData.facts}</p>
+                
+                <h4>المستندات:</h4>
+                <ul>
+                    ${caseData.documents.map(doc => `<li>${doc}</li>`).join('')}
+                </ul>
+                
+                <h4>معلومات إضافية:</h4>
+                <p>${caseData.additionalInfo}</p>
+            `;
+            
+            summaryContent.innerHTML = summary;
+            caseSummary.style.display = 'block';
+        }
+
+        // نسخ القضية
+        copyCase.addEventListener('click', () => {
+            const summaryText = summaryContent.innerText;
+            navigator.clipboard.writeText(summaryText)
+                .then(() => alert('تم نسخ ملخص القضية'))
+                .catch(err => console.error('Error copying text:', err));
+        });
+
+        // الانتقال إلى صفحة التحليل
+        startAnalysis.addEventListener('click', () => {
+            window.location.href = '/';
+        });
+
+        // معالجة إرسال الرسالة
+        sendMessage.addEventListener('click', () => {
+            const message = userInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                sendToBot(message);
+                userInput.value = '';
+            }
+        });
+
+        // معالجة ضغط Enter
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage.click();
+            }
+        });
+
+        // بدء المحادثة
+        window.addEventListener('load', () => {
+            sendToBot('', 'initial');
+        });
+    </script>
+</body>
+</html> 

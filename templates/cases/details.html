@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+
+{% block title %}{{ case.title }} - المحامي الذكي{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="hero-content bg-primary bg-opacity-10 p-5 rounded-4">
+                    <h1 class="display-4 mb-4 fw-bold text-primary">{{ case.title }}</h1>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('case.cases') }}" class="btn btn-outline-primary btn-lg px-4">
+                            <i class="fas fa-arrow-right me-2"></i>عودة للقائمة
+                        </a>
+                        <button class="btn btn-primary btn-lg px-4" onclick="window.print()">
+                            <i class="fas fa-print me-2"></i>طباعة التحليل
+                        </button>
+                        <button class="btn btn-success btn-lg px-4" onclick="downloadPDF()">
+                            <i class="fas fa-file-pdf me-2"></i>تحميل PDF
+                        </button>
+                        <button class="btn btn-info btn-lg px-4 text-white" onclick="shareAnalysis()">
+                            <i class="fas fa-share-alt me-2"></i>مشاركة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Case Details Section -->
+<section class="case-details-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Case Information -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-lg rounded-4 h-100">
+                    <div class="card-header bg-primary text-white p-4 border-0">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center bg-white text-primary rounded-circle p-3 mb-3">
+                            <i class="fas fa-info-circle fa-2x"></i>
+                        </div>
+                        <h2 class="h4 mb-0">معلومات القضية</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">الوصف</h5>
+                            <p class="text-dark mb-0">{{ case.description }}</p>
+                        </div>
+                        
+                        <!-- Case Tags -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">التصنيفات</h5>
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for tag in case.tags|default([]) %}
+                                <span class="badge bg-light text-primary rounded-pill px-3 py-2">
+                                    <i class="fas fa-tag me-1"></i>{{ tag }}
+                                </span>
+                                {% endfor %}
+                                <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="addTag()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Case Dates -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">التواريخ</h5>
+                            <div class="d-flex flex-column gap-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">تاريخ الإنشاء:</span>
+                                    <span class="text-dark">{{ case.created_at|default('غير محدد') }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">آخر تحديث:</span>
+                                    <span class="text-dark">{{ case.updated_at|default('غير محدد') }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">الحالة</h5>
+                            <div class="d-flex align-items-center">
+                                {% if case.status == 'completed' %}
+                                    <span class="badge bg-success rounded-pill">مكتمل</span>
+                                {% elif case.status == 'in_progress' %}
+                                    <span class="badge bg-primary rounded-pill">قيد التحليل</span>
+                                {% else %}
+                                    <span class="badge bg-warning rounded-pill">في الانتظار</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="progress mb-3" style="height: 10px;">
+                            {% set progress = (case.analyses|length / 12) * 100 %}
+                            <div class="progress-bar bg-primary" role="progressbar" data-progress="{{ progress }}" style="width: 0">
+                            </div>
+                        </div>
+                        <small class="text-muted">{{ case.analyses|length }} من 12 مرحلة مكتملة</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Results -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg rounded-4 mb-4">
+                    <div class="card-header bg-primary text-white p-4 border-0">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center bg-white text-primary rounded-circle p-3 mb-3">
+                            <i class="fas fa-tasks fa-2x"></i>
+                        </div>
+                        <h2 class="h4 mb-0">نتائج التحليل</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="timeline">
+                            {% for i in range(1, 13) %}
+                                {% set analysis = case.analyses|selectattr('stage', 'equalto', i)|first %}
+                                <div class="timeline-item mb-4">
+                                    <div class="card stage-card {% if analysis %}completed{% else %}pending{% endif %}">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <div class="stage-number me-3">{{ i }}</div>
+                                                <h3 class="h5 mb-0">{{ get_stage_title(i) }}</h3>
+                                            </div>
+                                            {% if analysis %}
+                                                <div class="analysis-result">{{ analysis.result }}</div>
+                                            {% else %}
+                                                <div class="text-muted">
+                                                    <i class="fas fa-hourglass-start me-2"></i>
+                                                    في انتظار التحليل...
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="card border-0 shadow-lg rounded-4">
+                    <div class="card-header bg-primary text-white p-4 border-0">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center bg-white text-primary rounded-circle p-3 mb-3">
+                            <i class="fas fa-comments fa-2x"></i>
+                        </div>
+                        <h2 class="h4 mb-0">الملاحظات والتعليقات</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="commentForm" class="mb-4">
+                            <div class="mb-3">
+                                <textarea class="form-control" id="commentText" rows="3" placeholder="أضف ملاحظتك هنا..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>إضافة ملاحظة
+                            </button>
+                        </form>
+                        <div class="comments-list">
+                            {% for comment in case.comments|default([]) %}
+                            <div class="comment-card mb-3">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="comment-avatar">
+                                        <i class="fas fa-user-circle fa-2x text-primary"></i>
+                                    </div>
+                                    <div class="comment-content flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="mb-0">{{ comment.user_name }}</h6>
+                                            <small class="text-muted">{{ comment.created_at }}</small>
+                                        </div>
+                                        <p class="mb-0">{{ comment.text }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.hero-section {
+    background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-primary-dark) 100%);
+    margin-top: -2rem;
+    padding-top: 4rem !important;
+}
+
+.hero-content {
+    backdrop-filter: blur(10px);
+}
+
+.stage-number {
+    width: 32px;
+    height: 32px;
+    background-color: var(--bs-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.timeline-item {
+    position: relative;
+    padding-right: 2rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--bs-primary);
+    opacity: 0.2;
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+
+.stage-card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.stage-card:hover {
+    transform: translateX(-5px);
+}
+
+.stage-card.completed {
+    border-color: var(--bs-success);
+}
+
+.stage-card.completed .stage-number {
+    background-color: var(--bs-success);
+}
+
+.stage-card.pending {
+    border-style: dashed;
+    border-color: var(--bs-gray-400);
+}
+
+.stage-card.pending .stage-number {
+    background-color: var(--bs-gray-400);
+}
+
+.analysis-result {
+    color: var(--bs-dark);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--bs-light);
+    border-radius: 8px;
+}
+
+.comment-card {
+    background-color: var(--bs-light);
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.comment-card:hover {
+    transform: translateX(-5px);
+}
+
+@media print {
+    .hero-section {
+        margin-top: 0;
+        padding-top: 2rem !important;
+    }
+    
+    .btn {
+        display: none;
+    }
+    
+    .card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+    
+    .stage-card:hover {
+        transform: none;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const progressBar = document.querySelector('.progress-bar');
+    const progress = progressBar.getAttribute('data-progress');
+    progressBar.style.width = progress + '%';
+    progressBar.setAttribute('aria-valuenow', progress);
+});
+
+function downloadPDF() {
+    // سيتم تنفيذ هذه الوظيفة لتحميل التحليل كملف PDF
+    alert('جاري تحضير ملف PDF...');
+}
+
+function shareAnalysis() {
+    // سيتم تنفيذ هذه الوظيفة لمشاركة التحليل
+    const shareData = {
+        title: document.title,
+        text: 'تحليل قضية: ' + document.querySelector('h1').textContent,
+        url: window.location.href
+    };
+    
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch((error) => console.log('Error sharing:', error));
+    } else {
+        // نسخ الرابط إلى الحافظة إذا كانت المشاركة غير مدعومة
+        navigator.clipboard.writeText(window.location.href)
+            .then(() => alert('تم نسخ رابط القضية'))
+            .catch(() => alert('حدث خطأ أثناء نسخ الرابط'));
+    }
+}
+
+function addTag() {
+    const tag = prompt('أدخل التصنيف الجديد:');
+    if (tag) {
+        // سيتم تنفيذ هذه الوظيفة لإضافة تصنيف جديد
+        alert('جاري إضافة التصنيف...');
+    }
+}
+
+document.getElementById('commentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const commentText = document.getElementById('commentText').value;
+    if (commentText) {
+        // سيتم تنفيذ هذه الوظيفة لإضافة تعليق جديد
+        alert('جاري إضافة التعليق...');
+        this.reset();
+    }
+});
+</script>
+{% endblock %} 

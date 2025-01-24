@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}النماذج القانونية - المستشار القانوني{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="section-title text-center mb-5">النماذج القانونية</h1>
+
+    <!-- قسم البحث -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="ابحث عن نموذج...">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option value="">نوع النموذج</option>
+                        <option value="contracts">عقود</option>
+                        <option value="agreements">اتفاقيات</option>
+                        <option value="forms">نماذج طلبات</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option value="">المجال</option>
+                        <option value="employment">عمل</option>
+                        <option value="commercial">تجاري</option>
+                        <option value="real-estate">عقارات</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- قائمة النماذج -->
+    <div class="row g-4">
+        <!-- عقود العمل -->
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="model-icon mb-3">
+                        <i class="fas fa-file-contract fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">عقد عمل</h5>
+                    <p class="card-text">نموذج عقد عمل شامل وقابل للتعديل</p>
+                    <div class="model-info mb-3">
+                        <span class="badge bg-light text-dark me-2">
+                            <i class="fas fa-download me-1"></i>5K
+                        </span>
+                        <span class="badge bg-light text-dark">
+                            <i class="fas fa-star me-1 text-warning"></i>4.8
+                        </span>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal">
+                            <i class="fas fa-eye me-2"></i>معاينة
+                        </button>
+                        <a href="{{ url_for('employment_contract') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-download me-2"></i>تحميل
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الوكالة القانونية -->
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="model-icon mb-3">
+                        <i class="fas fa-file-signature fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">وكالة قانونية</h5>
+                    <p class="card-text">نموذج وكالة قانونية معتمد</p>
+                    <div class="model-info mb-3">
+                        <span class="badge bg-light text-dark me-2">
+                            <i class="fas fa-download me-1"></i>3.2K
+                        </span>
+                        <span class="badge bg-light text-dark">
+                            <i class="fas fa-star me-1 text-warning"></i>4.5
+                        </span>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal">
+                            <i class="fas fa-eye me-2"></i>معاينة
+                        </button>
+                        <a href="{{ url_for('power_of_attorney') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-download me-2"></i>تحميل
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اتفاقية عدم الإفصاح -->
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="model-icon mb-3">
+                        <i class="fas fa-file-alt fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">اتفاقية عدم إفصاح</h5>
+                    <p class="card-text">نموذج اتفاقية سرية المعلومات</p>
+                    <div class="model-info mb-3">
+                        <span class="badge bg-light text-dark me-2">
+                            <i class="fas fa-download me-1"></i>2.8K
+                        </span>
+                        <span class="badge bg-light text-dark">
+                            <i class="fas fa-star me-1 text-warning"></i>4.7
+                        </span>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal">
+                            <i class="fas fa-eye me-2"></i>معاينة
+                        </button>
+                        <a href="{{ url_for('non_disclosure_agreement') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-download me-2"></i>تحميل
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- نموذج استئناف -->
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="model-icon mb-3">
+                        <i class="fas fa-gavel fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">نموذج استئناف</h5>
+                    <p class="card-text">نموذج طلب استئناف قضائي</p>
+                    <div class="model-info mb-3">
+                        <span class="badge bg-light text-dark me-2">
+                            <i class="fas fa-download me-1"></i>1.5K
+                        </span>
+                        <span class="badge bg-light text-dark">
+                            <i class="fas fa-star me-1 text-warning"></i>4.6
+                        </span>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal">
+                            <i class="fas fa-eye me-2"></i>معاينة
+                        </button>
+                        <a href="{{ url_for('appeal_form') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-download me-2"></i>تحميل
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- عقد إيجار -->
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="model-icon mb-3">
+                        <i class="fas fa-home fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">عقد إيجار</h5>
+                    <p class="card-text">نموذج عقد إيجار سكني/تجاري</p>
+                    <div class="model-info mb-3">
+                        <span class="badge bg-light text-dark me-2">
+                            <i class="fas fa-download me-1"></i>4.1K
+                        </span>
+                        <span class="badge bg-light text-dark">
+                            <i class="fas fa-star me-1 text-warning"></i>4.9
+                        </span>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal">
+                            <i class="fas fa-eye me-2"></i>معاينة
+                        </button>
+                        <a href="{{ url_for('rental_agreement') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-download me-2"></i>تحميل
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal المعاينة -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">معاينة النموذج</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="preview-content">
+                    <!-- محتوى المعاينة سيتم تحميله ديناميكياً -->
+                    <div class="text-center py-5">
+                        <i class="fas fa-file-alt fa-4x text-muted mb-3"></i>
+                        <p>جاري تحميل المعاينة...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-download me-2"></i>تحميل النموذج
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .model-icon {
+        width: 80px;
+        height: 80px;
+        background-color: var(--light-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .model-info .badge {
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // يمكن إضافة كود JavaScript للتعامل مع المعاينة والتحميل
+});
+</script>
+{% endblock %}

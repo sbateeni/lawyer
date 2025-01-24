@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معلومات قانونية</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>معلومات قانونية</h1>
+    </header>
+    <main>
+        <ul>
+            <li><a href="{{ url_for('document_information.family_law') }}"><strong>القانون العائلي</strong></a>: معلومات حول القانون العائلي.</li>
+            <li><a href="{{ url_for('document_information.intellectual_property_law') }}"><strong>قانون الملكية الفكرية</strong></a>: معلومات حول قانون الملكية الفكرية.</li>
+        </ul>
+        <p>يمكنك الاطلاع على المزيد من المعلومات القانونية من خلال الصفحات الأخرى.</p>
+    </main>
+    <footer>
+        <p>حقوق النشر &copy; 2024</p>
+    </footer>
+</body>
+</html>

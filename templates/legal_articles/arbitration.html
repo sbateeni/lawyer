@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}التحكيم التجاري - المستشار القانوني{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('legal_articles') }}">المقالات القانونية</a></li>
+            <li class="breadcrumb-item active">التحكيم التجاري</li>
+        </ol>
+    </nav>
+
+    <article class="article-content">
+        <h1 class="section-title mb-4">التحكيم التجاري: الحل الأمثل للنزاعات التجارية</h1>
+        
+        <div class="article-meta mb-4">
+            <span class="me-3"><i class="fas fa-calendar-alt"></i> تاريخ النشر: 20 مارس 2024</span>
+            <span><i class="fas fa-user"></i> الكاتب: د. أحمد محمود</span>
+        </div>
+
+        <div class="article-body">
+            <p class="lead">يعتبر التحكيم التجاري من أهم الوسائل البديلة لحل النزاعات في مجال الأعمال والتجارة، حيث يوفر حلولاً سريعة وفعالة للخلافات التجارية.</p>
+            
+            <h2 class="h4 mt-4 mb-3">مميزات التحكيم التجاري</h2>
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-clock text-primary me-2"></i>السرعة في الإجراءات</h5>
+                            <p class="card-text">إجراءات أسرع من التقاضي العادي مع مرونة في تحديد المواعيد</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-user-tie text-primary me-2"></i>خبرة المحكمين</h5>
+                            <p class="card-text">محكمون متخصصون في المجال التجاري والقانوني</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="h4 mt-4 mb-3">إجراءات التحكيم</h2>
+            <div class="timeline-container mb-4">
+                <div class="timeline-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">1. اتفاق التحكيم</h5>
+                            <p class="card-text">توقيع اتفاقية تحكيم بين الأطراف المتنازعة</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">2. تشكيل هيئة التحكيم</h5>
+                            <p class="card-text">اختيار المحكمين وتشكيل الهيئة</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">3. جلسات التحكيم</h5>
+                            <p class="card-text">عقد الجلسات وتقديم المستندات والأدلة</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">4. إصدار الحكم</h5>
+                            <p class="card-text">إصدار قرار التحكيم النهائي</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <h3 class="h5"><i class="fas fa-exclamation-triangle"></i> نصائح مهمة</h3>
+                <ul class="mb-0">
+                    <li>احرص على صياغة شرط التحكيم بشكل دقيق في العقود التجارية</li>
+                    <li>اختر محكمين ذوي خبرة في مجال النزاع</li>
+                    <li>احتفظ بكافة المستندات والأدلة المتعلقة بالنزاع</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="article-footer mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="h5">مراجع قانونية:</h4>
+                    <ul>
+                        <li><a href="#">قانون التحكيم الفلسطيني</a></li>
+                        <li><a href="#">اتفاقية نيويورك للتحكيم</a></li>
+                        <li><a href="#">نماذج شروط التحكيم</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <div class="share-buttons text-md-end">
+                        <h4 class="h5">شارك المقال:</h4>
+                        <a href="#" class="btn btn-outline-primary btn-sm me-2"><i class="fab fa-facebook-f"></i> فيسبوك</a>
+                        <a href="#" class="btn btn-outline-info btn-sm me-2"><i class="fab fa-twitter"></i> تويتر</a>
+                        <a href="#" class="btn btn-outline-success btn-sm"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .article-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .article-body {
+        line-height: 1.8;
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .article-meta {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .timeline-container {
+        position: relative;
+        padding: 20px 0;
+    }
+
+    .timeline-item {
+        margin-bottom: 20px;
+        position: relative;
+        padding-right: 30px;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: var(--primary-color);
+    }
+
+    .timeline-item::after {
+        content: '';
+        position: absolute;
+        right: -4px;
+        top: 20px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+    }
+
+    .share-buttons .btn {
+        padding: 0.375rem 1rem;
+    }
+</style>
+{% endblock %}

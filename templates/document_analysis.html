@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل المستندات | المحامي الذكي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
+        }
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: none;
+        }
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #0d6efd;
+            background-color: #f8f9fa;
+        }
+        .btn {
+            border-radius: 0.5rem;
+            padding: 0.5rem 1.5rem;
+        }
+        .progress {
+            height: 5px;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-scale fs-2 text-primary me-2"></i>
+                المحامي الذكي
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">
+                            <i class="bi bi-house-fill"></i> العودة للرئيسية
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center mb-0">تحليل المستندات</h1>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead text-center mb-4">قم برفع المستند المراد تحليله</p>
+                        
+                        <div class="upload-area mb-4" id="uploadArea">
+                            <i class="bi bi-cloud-upload display-4 text-primary mb-3"></i>
+                            <h4>اسحب الملف هنا أو انقر للاختيار</h4>
+                            <p class="text-muted">PDF, DOCX - الحد الأقصى 10 ميجابايت</p>
+                            <input type="file" id="fileInput" class="d-none" accept=".pdf,.docx,.doc">
+                            <button class="btn btn-primary mt-3" onclick="document.getElementById('fileInput').click()">
+                                <i class="bi bi-upload"></i>
+                                اختر ملف
+                            </button>
+                        </div>
+
+                        <div class="progress mb-4" style="display: none;" id="progressBar">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+                        </div>
+
+                        <div id="resultsSection" style="display: none;">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-tags"></i>
+                                        الكلمات القانونية الرئيسية
+                                    </h5>
+                                </div>
+                                <div class="card-body" id="legalKeywords"></div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-list-stars"></i>
+                                        النقاط الرئيسية
+                                    </h5>
+                                </div>
+                                <div class="card-body" id="keyPoints"></div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-graph-up"></i>
+                                        إحصائيات المستند
+                                    </h5>
+                                </div>
+                                <div class="card-body" id="documentStats"></div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-diagram-3"></i>
+                                        هيكل المستند
+                                    </h5>
+                                </div>
+                                <div class="card-body" id="documentStructure"></div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-book"></i>
+                                        القانون العائلي
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>معلومات حول القانون العائلي.</p>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-lightbulb"></i>
+                                        قانون الملكية الفكرية
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>معلومات حول قانون الملكية الفكرية.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // إعداد منطقة السحب والإفلات
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const progressBar = document.getElementById('progressBar');
+        const resultsSection = document.getElementById('resultsSection');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#0d6efd';
+            uploadArea.style.backgroundColor = '#f8f9fa';
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#dee2e6';
+            uploadArea.style.backgroundColor = 'white';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#dee2e6';
+            uploadArea.style.backgroundColor = 'white';
+            
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            // التحقق من نوع الملف
+            const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!validTypes.includes(file.type)) {
+                alert('يرجى اختيار ملف PDF أو DOCX فقط');
+                return;
+            }
+
+            // التحقق من حجم الملف
+            if (file.size > 10 * 1024 * 1024) {
+                alert('حجم الملف يجب أن يكون أقل من 10 ميجابايت');
+                return;
+            }
+
+            // إظهار شريط التقدم
+            progressBar.style.display = 'flex';
+            progressBar.querySelector('.progress-bar').style.width = '0%';
+
+            // إنشاء FormData وإرسال الملف
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/api/analyze-document', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فشل في تحليل المستند');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // إخفاء شريط التقدم وإظهار النتائج
+                progressBar.style.display = 'none';
+                displayResults(data);
+            })
+            .catch(error => {
+                progressBar.style.display = 'none';
+                alert(error.message);
+            });
+
+            // محاكاة تقدم التحميل
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.querySelector('.progress-bar').style.width = `${progress}%`;
+                if (progress >= 90) clearInterval(interval);
+            }, 100);
+        }
+
+        function displayResults(data) {
+            resultsSection.style.display = 'block';
+
+            // عرض الكلمات القانونية
+            const keywordsHtml = data.legal_keywords.map(keyword => 
+                `<span class="badge bg-primary me-2 mb-2">${keyword}</span>`
+            ).join('');
+            document.getElementById('legalKeywords').innerHTML = keywordsHtml;
+
+            // عرض النقاط الرئيسية
+            const pointsHtml = data.key_points.map(point => 
+                `<div class="mb-2">• ${point}</div>`
+            ).join('');
+            document.getElementById('keyPoints').innerHTML = pointsHtml;
+
+            // عرض إحصائيات المستند
+            const stats = data.document_statistics;
+            document.getElementById('documentStats').innerHTML = `
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <h3>${stats.total_words}</h3>
+                        <p class="text-muted">إجمالي الكلمات</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h3>${stats.unique_words}</h3>
+                        <p class="text-muted">الكلمات الفريدة</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h3>${stats.total_characters}</h3>
+                        <p class="text-muted">إجمالي الأحرف</p>
+                    </div>
+                </div>
+            `;
+
+            // عرض هيكل المستند
+            const structure = data.document_structure;
+            const structureHtml = `
+                <p><strong>عدد الفقرات:</strong> ${structure.total_paragraphs}</p>
+                <div class="mt-3">
+                    ${structure.sections.map(section => `
+                        <div class="mb-3">
+                            <h6>${section.title}</h6>
+                            <small class="text-muted">طول المحتوى: ${section.content_length} حرف</small>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('documentStructure').innerHTML = structureHtml;
+        }
+    </script>
+</body>
+</html>

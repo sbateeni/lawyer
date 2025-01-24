@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}المسؤولية القانونية للأطباء - المستشار القانوني{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('legal_articles') }}">المقالات القانونية</a></li>
+            <li class="breadcrumb-item active">المسؤولية القانونية للأطباء</li>
+        </ol>
+    </nav>
+
+    <article class="article-content">
+        <h1 class="section-title mb-4">المسؤولية القانونية للأطباء في القانون الفلسطيني</h1>
+        
+        <div class="article-meta mb-4">
+            <span class="me-3"><i class="fas fa-calendar-alt"></i> تاريخ النشر: 20 مارس 2024</span>
+            <span><i class="fas fa-user"></i> إعداد: وحدة التحليل القانوني</span>
+        </div>
+
+        <div class="article-body">
+            <!-- مقدمة -->
+            <div class="alert alert-primary">
+                <i class="fas fa-info-circle me-2"></i>
+                يتناول هذا المقال الجوانب القانونية للمسؤولية الطبية وحقوق وواجبات الأطباء والمرضى.
+            </div>
+
+            <!-- أنواع المسؤولية القانونية -->
+            <section class="mb-5">
+                <h2 class="h4 mb-4">أنواع المسؤولية القانونية للأطباء</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-balance-scale text-primary me-2"></i>
+                                    المسؤولية المدنية
+                                </h5>
+                                <ul class="list-unstyled">
+                                    <li>• التعويض عن الأضرار</li>
+                                    <li>• الإهمال الطبي</li>
+                                    <li>• الأخطاء المهنية</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-gavel text-primary me-2"></i>
+                                    المسؤولية الجنائية
+                                </h5>
+                                <ul class="list-unstyled">
+                                    <li>• الأخطاء الجسيمة</li>
+                                    <li>• إفشاء السر المهني</li>
+                                    <li>• الممارسة غير القانونية</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-user-md text-primary me-2"></i>
+                                    المسؤولية التأديبية
+                                </h5>
+                                <ul class="list-unstyled">
+                                    <li>• مخالفة آداب المهنة</li>
+                                    <li>• العقوبات النقابية</li>
+                                    <li>• الإجراءات التأديبية</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- حقوق وواجبات الطبيب -->
+            <section class="mb-5">
+                <h2 class="h4 mb-4">حقوق وواجبات الطبيب</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>الواجبات</th>
+                                <th>الحقوق</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>بذل العناية المهنية اللازمة</td>
+                                <td>الحماية القانونية</td>
+                            </tr>
+                            <tr>
+                                <td>الحفاظ على السرية</td>
+                                <td>الأتعاب المهنية</td>
+                            </tr>
+                            <tr>
+                                <td>التعليم المستمر</td>
+                                <td>رفض الحالات الخطرة</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- حالات المسؤولية -->
+            <section class="mb-5">
+                <h2 class="h4 mb-4">حالات المسؤولية الطبية</h2>
+                <div class="accordion" id="medicalCases">
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#case1">
+                                الخطأ في التشخيص
+                            </button>
+                        </h3>
+                        <div id="case1" class="accordion-collapse collapse show" data-bs-parent="#medicalCases">
+                            <div class="accordion-body">
+                                يشمل الأخطاء في التشخيص الأولي، عدم إجراء الفحوصات اللازمة، أو تأخير التشخيص مما يؤدي إلى تفاقم الحالة.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#case2">
+                                الأخطاء العلاجية
+                            </button>
+                        </h3>
+                        <div id="case2" class="accordion-collapse collapse" data-bs-parent="#medicalCases">
+                            <div class="accordion-body">
+                                تشمل الأخطاء في وصف الدواء، الجرعات غير الصحيحة، أو عدم مراعاة التداخلات الدوائية.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- إرشادات قانونية -->
+            <div class="alert alert-info">
+                <h3 class="h5"><i class="fas fa-lightbulb"></i> إرشادات للأطباء</h3>
+                <ul class="mb-0">
+                    <li>توثيق جميع الإجراءات الطبية</li>
+                    <li>الحصول على الموافقة المستنيرة</li>
+                    <li>التأمين ضد المسؤولية المهنية</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- المراجع -->
+        <div class="article-footer mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="h5">مراجع قانونية</h4>
+                    <ul>
+                        <li><a href="#">قانون المسؤولية الطبية</a></li>
+                        <li><a href="#">نظام مزاولة المهن الطبية</a></li>
+                        <li><a href="#">قرارات نقابة الأطباء</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <div class="share-buttons text-md-end">
+                        <h4 class="h5">شارك المقال</h4>
+                        <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                            <i class="fab fa-facebook-f"></i> فيسبوك
+                        </a>
+                        <a href="#" class="btn btn-outline-info btn-sm me-2">
+                            <i class="fab fa-twitter"></i> تويتر
+                        </a>
+                        <a href="#" class="btn btn-outline-success btn-sm">
+                            <i class="fab fa-whatsapp"></i> واتساب
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .article-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .article-body {
+        line-height: 1.8;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: var(--light-bg);
+        color: var(--primary-color);
+    }
+
+    .table th {
+        background-color: var(--light-bg);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,451 @@
+/* التنسيق العام */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-bg);
+    color: #333;
+}
+
+/* الهيدر */
+header {
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    margin-top: 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #283593;
+}
+
+/* المحتوى الرئيسي */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+section {
+    margin-bottom: 3rem;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #007bff;
+}
+
+p {
+    line-height: 1.6;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: #ffffff;
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* تنسيقات عامة */
+:root {
+    --primary-color: #1a237e;
+    --secondary-color: #0d47a1;
+    --success-color: #4caf50;
+    --error-color: #f44336;
+    --warning-color: #ff9800;
+    --light-bg: #f8f9fa;
+    --dark-bg: #343a40;
+}
+
+/* نموذج القضية */
+.case-form {
+    background: transparent;
+    padding: 0;
+}
+
+.form-group label {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border: 2px solid #e9ecef;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(26, 35, 126, 0.1);
+}
+
+/* بطاقات التحليل */
+.analysis-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.analysis-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stage-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.stage-number {
+    width: 48px;
+    height: 48px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(26, 35, 126, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stage-title {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.model-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.model-badge.gemini {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.model-badge.llama {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.stage-content {
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 14px;
+    margin-top: 1rem;
+}
+
+/* حالات البطاقة */
+.analysis-card.pending .stage-content {
+    border: 2px dashed #dee2e6;
+}
+
+.analysis-card.processing {
+    border-left: 4px solid var(--primary-color);
+}
+
+.analysis-card.completed {
+    border-left: 4px solid var(--success-color);
+}
+
+.analysis-card.error {
+    border-left: 4px solid var(--error-color);
+}
+
+.stage-status {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+}
+
+.analysis-result {
+    white-space: pre-wrap;
+    line-height: 1.8;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.analysis-meta {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #ddd;
+    color: #666;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* الأزرار */
+.btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.15);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 35, 126, 0.2);
+}
+
+.btn-light {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.btn-light:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* الأيقونات */
+.feature-icon-small {
+    width: 80px;
+    height: 80px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+}
+
+.feature-icon-small:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-icon-small i {
+    font-size: 2rem;
+}
+
+/* تحسينات الواجهة */
+.card {
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.card-header {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem !important;
+    border: none;
+}
+
+.card-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+/* تصميم متجاوب */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 3rem 0;
+    }
+    
+    .hero-section .display-4 {
+        font-size: 2rem;
+    }
+    
+    .hero-content {
+        padding: 2rem !important;
+    }
+    
+    .stage-title {
+        font-size: 1rem;
+    }
+    
+    .feature-icon-small {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .feature-icon-small i {
+        font-size: 1.5rem;
+    }
+    
+    .card-header {
+        padding: 1.5rem !important;
+    }
+}
+
+/* تصميم متجاوب */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+    nav {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+    margin-top: -1rem;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/static/images/pattern.png') repeat;
+    opacity: 0.1;
+}
+
+.hero-content {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3rem !important;
+    border-radius: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section .display-4 {
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.hero-section .lead {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+/* Analysis Form Section */
+.analysis-form-section {
+    background-color: var(--light-bg);
+    position: relative;
+    z-index: 1;
+    margin-top: -2rem;
+    padding-top: 4rem;
+}
+
+.analysis-form-section .card {
+    border: none;
+    transition: transform 0.3s ease;
+}
+
+.analysis-form-section .card:hover {
+    transform: translateY(-5px);
+}
+
+.analysis-form-section .form-control {
+    border: 1px solid #dee2e6;
+    transition: border-color 0.3s ease;
+}
+
+.analysis-form-section .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+}
+
+.analysis-form-section textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.analysis-form-section .btn-primary {
+    padding: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(26, 35, 126, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(26, 35, 126, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(26, 35, 126, 0);
+    }
+}
+
+.processing .stage-content {
+    animation: pulse 2s infinite;
+}

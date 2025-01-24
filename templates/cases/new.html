@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+
+{% block title %}تحليل قضية جديدة - المحامي الذكي{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="hero-content bg-primary bg-opacity-10 p-5 rounded-4">
+                    <h1 class="display-4 mb-4 fw-bold text-primary">تحليل قضية جديدة</h1>
+                    <p class="lead mb-4 text-dark">نظام تحليل ذكي يستخدم أحدث تقنيات الذكاء الاصطناعي لتحليل قضيتك عبر 12 مرحلة متخصصة</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('case.cases') }}" class="btn btn-primary btn-lg px-4">
+                            <i class="fas fa-list me-2"></i>عرض القضايا السابقة
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Analysis Form Section -->
+<section class="analysis-form-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- نموذج إدخال القضية -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-lg h-100 rounded-4 overflow-hidden">
+                    <div class="card-header bg-primary text-white p-4 text-center border-0">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center bg-white text-primary rounded-circle p-3 mb-3">
+                            <i class="fas fa-gavel fa-2x"></i>
+                        </div>
+                        <h2 class="h4 mb-0">تفاصيل القضية</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="case-form">
+                            <form id="analysisForm" class="needs-validation" novalidate>
+                                <div class="mb-4">
+                                    <label for="case-title" class="form-label">عنوان القضية</label>
+                                    <input type="text" class="form-control form-control-lg" id="case-title" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="case-description" class="form-label">وصف القضية</label>
+                                    <textarea class="form-control" id="case-description" rows="5" required></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                        <i class="fas fa-play-circle me-2"></i>بدء التحليل الشامل
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- عرض المراحل -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg h-100 rounded-4 overflow-hidden">
+                    <div class="card-header bg-primary text-white p-4 text-center border-0">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center bg-white text-primary rounded-circle p-3 mb-3">
+                            <i class="fas fa-tasks fa-2x"></i>
+                        </div>
+                        <h2 class="h4 mb-2">مراحل التحليل</h2>
+                        <p class="mb-0 opacity-90">12 مرحلة متخصصة لتحليل قضيتك بشكل شامل</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="analyses-list">
+                            <div class="row g-4">
+                                <!-- سيتم إضافة بطاقات المراحل هنا عبر JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.stage-number {
+    width: 32px;
+    height: 32px;
+    background-color: var(--bs-primary);
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.model-badge {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    background-color: var(--bs-light);
+    color: var(--bs-primary);
+}
+
+.model-badge.gemini {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.model-badge.llama {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.stage-content {
+    background-color: var(--bs-light);
+    min-height: 80px;
+}
+
+.stage-status {
+    color: var(--bs-gray-600);
+}
+
+.analysis-card {
+    transition: all 0.3s ease;
+}
+
+.analysis-card:hover {
+    transform: translateY(-5px);
+}
+
+.analysis-card.pending .stage-content {
+    border: 1px dashed var(--bs-gray-300);
+}
+
+.analysis-card.processing .stage-content {
+    border: 1px solid var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+.analysis-card.completed .stage-content {
+    border: 1px solid var(--bs-success);
+    background-color: rgba(var(--bs-success-rgb), 0.05);
+}
+
+.analysis-card.error .stage-content {
+    border: 1px solid var(--bs-danger);
+    background-color: rgba(var(--bs-danger-rgb), 0.05);
+}
+
+.analysis-result {
+    color: var(--bs-dark);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.stage-title {
+    color: var(--bs-dark);
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-primary-dark) 100%);
+    margin-top: -2rem;
+    padding-top: 4rem !important;
+}
+
+.hero-content {
+    backdrop-filter: blur(10px);
+}
+
+.verify-button {
+    transition: all 0.3s ease;
+}
+
+.verify-button:hover {
+    transform: translateY(-2px);
+}
+
+.verification-result {
+    margin-top: 1rem;
+}
+
+.stage-card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.stage-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+<script>
+    const stages = [
+        { id: 1, title: 'التحليل الأولي للنص', model: 'gemini', type: 'legal_text', icon: 'fas fa-file-alt' },
+        { id: 2, title: 'تحليل الوقائع والأحداث', model: 'llama', type: 'analysis', icon: 'fas fa-search' },
+        { id: 3, title: 'التحليل القانوني الأساسي', model: 'gemini', type: 'legal_article', icon: 'fas fa-balance-scale' },
+        { id: 4, title: 'تحليل الأدلة والمستندات', model: 'llama', type: 'analysis', icon: 'fas fa-folder-open' },
+        { id: 5, title: 'تحليل السوابق القضائية', model: 'gemini', type: 'law_reference', icon: 'fas fa-history' },
+        { id: 6, title: 'تحليل الحجج القانونية', model: 'llama', type: 'analysis', icon: 'fas fa-gavel' },
+        { id: 7, title: 'تحليل الدفوع القانونية', model: 'gemini', type: 'legal_text', icon: 'fas fa-shield-alt' },
+        { id: 8, title: 'التحليل الإجرائي', model: 'llama', type: 'analysis', icon: 'fas fa-tasks' },
+        { id: 9, title: 'صياغة الاستراتيجية القانونية', model: 'gemini', type: 'analysis', icon: 'fas fa-chess' },
+        { id: 10, title: 'تحليل المخاطر والفرص', model: 'llama', type: 'analysis', icon: 'fas fa-chart-line' },
+        { id: 11, title: 'اقتراح الحلول والبدائل', model: 'gemini', type: 'analysis', icon: 'fas fa-lightbulb' },
+        { id: 12, title: 'إعداد الملخص النهائي', model: 'llama', type: 'analysis', icon: 'fas fa-file-signature' }
+    ];
+
+    const analysesList = document.querySelector('.analyses-list .row');
+    let currentCase = null;
+
+    // إنشاء بطاقات التحليل
+    stages.forEach(stage => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6';
+        
+        const card = document.createElement('div');
+        card.className = 'analysis-card pending h-100 card border-0 shadow-sm rounded-4';
+        card.id = `stage-${stage.id}`;
+        
+        card.innerHTML = `
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="stage-title mb-0">${stage.title}</h5>
+                    ${['legal_text', 'law_reference', 'legal_article'].includes(stage.type) ? `
+                        <button 
+                            class="btn btn-outline-primary btn-sm verify-button"
+                            onclick="verifyStage('${stage.id}', '${stage.type}')"
+                        >
+                            <i class="fas fa-check"></i> تحقق من الدقة
+                        </button>
+                    ` : ''}
+                </div>
+                <div class="stage-content rounded-4 p-3">
+                    <div class="stage-status">
+                        <i class="${stage.icon} me-2"></i>في انتظار التحليل...
+                    </div>
+                </div>
+                <div class="verification-result"></div>
+            </div>
+        `;
+        
+        col.appendChild(card);
+        analysesList.appendChild(col);
+    });
+
+    async function verifyStage(stageId, type) {
+        const card = document.getElementById(`stage-${stageId}`);
+        const resultDiv = card.querySelector('.verification-result');
+        const button = card.querySelector('.verify-button');
+        
+        try {
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...';
+            
+            const response = await fetch('/api/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    stage_id: stageId,
+                    type: type,
+                    text: document.getElementById('case-description').value
+                })
+            });
+            
+            const data = await response.json();
+            if (data.status === 'success') {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-success mt-3">
+                        <i class="fas fa-check-circle me-2"></i>
+                        ${data.result}
+                    </div>
+                `;
+            } else {
+                throw new Error(data.error || 'فشل التحقق');
+            }
+        } catch (error) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger mt-3">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    ${error.message}
+                </div>
+            `;
+        } finally {
+            button.disabled = false;
+            button.innerHTML = '<i class="fas fa-check"></i> تحقق من الدقة';
+        }
+    }
+
+    async function analyzeStage(stage, caseData) {
+        const card = document.getElementById(`stage-${stage.id}`);
+        card.className = 'analysis-card processing h-100 card border-0 shadow-sm rounded-4';
+        const statusDiv = card.querySelector('.stage-status');
+        const contentDiv = card.querySelector('.stage-content');
+        
+        statusDiv.innerHTML = `<div class="d-flex align-items-center gap-2">
+            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+            <span>جاري التحليل...</span>
+        </div>`;
+
+        try {
+            const response = await fetch('/api/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    case_id: caseData.id,
+                    stage: stage.id,
+                    model_type: stage.model,
+                    text: caseData.description
+                })
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                card.className = 'analysis-card completed h-100 card border-0 shadow-sm rounded-4';
+                contentDiv.innerHTML = `
+                    <div class="analysis-result">${data.result}</div>
+                `;
+            } else {
+                throw new Error(data.error || 'فشل التحليل');
+            }
+        } catch (error) {
+            console.error(`Error in stage ${stage.id}:`, error);
+            card.className = 'analysis-card error h-100 card border-0 shadow-sm rounded-4';
+            contentDiv.innerHTML = `
+                <div class="alert alert-danger mb-0">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    حدث خطأ في التحليل
+                    <button class="btn btn-sm btn-outline-danger ms-2" onclick="retryStage(${stage.id}, currentCase)">
+                        <i class="fas fa-redo"></i> إعادة المحاولة
+                    </button>
+                </div>
+            `;
+        }
+        
+        // الانتقال إلى المرحلة التالية بغض النظر عن نجاح أو فشل المرحلة الحالية
+        const nextStage = stages.find(s => s.id === stage.id + 1);
+        if (nextStage) {
+            await analyzeStage(nextStage, caseData);
+        }
+    }
+
+    // إضافة وظيفة إعادة المحاولة
+    async function retryStage(stageId, caseData) {
+        const stage = stages.find(s => s.id === stageId);
+        if (stage && caseData) {
+            await analyzeStage(stage, caseData);
+        }
+    }
+
+    // تحديث وظيفة تحليل القضية
+    async function analyzeCase(event) {
+        event.preventDefault();
+        const form = event.target;
+        const titleInput = form.querySelector('#case-title');
+        const descriptionInput = form.querySelector('#case-description');
+        
+        if (!titleInput.value || !descriptionInput.value) {
+            alert('يرجى ملء جميع الحقول المطلوبة');
+            return;
+        }
+        
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري التحليل...';
+        
+        try {
+            // إنشاء القضية
+            const createResponse = await fetch('/api/cases/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: titleInput.value,
+                    description: descriptionInput.value
+                })
+            });
+            
+            const createData = await createResponse.json();
+            if (createData.status === 'success') {
+                currentCase = createData.case;
+                form.reset();
+                
+                // بدء التحليل من المرحلة الأولى
+                const firstStage = stages[0];
+                await analyzeStage(firstStage, currentCase);
+            } else {
+                throw new Error(createData.error || 'فشل إنشاء القضية');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('حدث خطأ أثناء إنشاء القضية. يرجى المحاولة مرة أخرى.');
+        } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+        }
+    }
+
+    document.getElementById('analysisForm').addEventListener('submit', analyzeCase);
+</script>
+{% endblock %} 
