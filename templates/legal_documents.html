@@ -1,37 +1,171 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الوثائق القانونية</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>الوثائق القانونية</h1>
-    </header>
-    <main>
-        <p>هنا يمكنك العثور على مجموعة من الوثائق القانونية المهمة التي يمكن أن تساعدك في قضاياك القانونية.</p>
-        <ul>
-            <li>
-                <strong><a href="/legal_models/employment_contract">نموذج عقد عمل</a></strong>: وثيقة قانونية تحدد شروط العمل بين الموظف وصاحب العمل.
-            </li>
-            <li>
-                <strong><a href="/legal_models/power_of_attorney">نموذج توكيل قانوني</a></strong>: وثيقة تسمح لشخص آخر بتمثيلك قانونيًا.
-            </li>
-            <li>
-                <strong><a href="/legal_models/non_disclosure_agreement">نموذج اتفاقية سرية</a></strong>: وثيقة تحمي المعلومات السرية بين الأطراف.
-            </li>
-            <li>
-                <strong><a href="/legal_models/appeal_form">نموذج استئناف</a></strong>: وثيقة تستخدم للطعن في قرار قانوني.
-            </li>
-            <li>
-                <strong><a href="/legal_models/rental_agreement">نموذج عقد إيجار</a></strong>: وثيقة قانونية تحدد شروط الإيجار بين المؤجر والمستأجر.
-            </li>
-        </ul>
-    </main>
-    <footer>
-        <p>حقوق النشر &copy; 2024</p>
-    </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}الوثائق القانونية - المستشار القانوني{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="section-title text-center mb-5">الوثائق القانونية</h1>
+
+    <!-- قسم البحث -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="ابحث في الوثائق...">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option value="">نوع الوثيقة</option>
+                        <option value="laws">قوانين</option>
+                        <option value="regulations">لوائح تنفيذية</option>
+                        <option value="decisions">قرارات</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option value="">المجال القانوني</option>
+                        <option value="civil">مدني</option>
+                        <option value="commercial">تجاري</option>
+                        <option value="criminal">جنائي</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- قائمة الوثائق -->
+    <div class="row g-4">
+        <!-- القوانين الأساسية -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-book-open text-primary me-2"></i>
+                        القوانين الأساسية
+                    </h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>القانون المدني</span>
+                            <a href="#" class="btn btn-sm btn-outline-primary">عرض</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>قانون العمل</span>
+                            <a href="#" class="btn btn-sm btn-outline-primary">عرض</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>قانون الشركات</span>
+                            <a href="#" class="btn btn-sm btn-outline-primary">عرض</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- اللوائح التنفيذية -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-file-alt text-primary me-2"></i>
+                        اللوائح التنفيذية
+                    </h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>لائحة قانون العمل</span>
+                            <a href="#" class="btn btn-sm btn-outline-primary">عرض</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>لائحة الشركات</span>
+                            <a href="#" class="btn btn-sm btn-outline-primary">عرض</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>لائحة التنفيذ</span>
+                            <a href="#" class="btn btn-sm btn-outline-primary">عرض</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- الأحكام القضائية -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-gavel text-primary me-2"></i>
+                        أحدث الأحكام القضائية
+                    </h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>رقم الحكم</th>
+                                    <th>المحكمة</th>
+                                    <th>التاريخ</th>
+                                    <th>الموضوع</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024/123</td>
+                                    <td>محكمة النقض</td>
+                                    <td>2024-03-15</td>
+                                    <td>نزاع تجاري</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye me-1"></i>عرض
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-download me-1"></i>تحميل
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2024/122</td>
+                                    <td>محكمة الاستئناف</td>
+                                    <td>2024-03-14</td>
+                                    <td>قضية عمالية</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye me-1"></i>عرض
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-download me-1"></i>تحميل
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .list-group-item {
+        transition: background-color 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background-color: var(--light-bg);
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}
