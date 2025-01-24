@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -61,10 +62,95 @@
                         </a>
                     </li>
                 </ul>
+=======
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}المحامي الذكي{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block styles %}{% endblock %}
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="المحامي الذكي - مساعدك القانوني الشخصي">
+    <meta name="keywords" content="محامي, قانون, استشارة قانونية, ذكاء اصطناعي">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1 class="header-title">المحامي الذكي</h1>
+        <nav class="nav-container">
+            <a class="nav-item" href="{{ url_for('home') }}">
+                <i class="fas fa-home"></i>
+                الرئيسية
+            </a>
+            <a class="nav-item" href="{{ url_for('chat.chat_page') }}">
+                <i class="fas fa-comments"></i>
+                محادثة بناء القضية
+            </a>
+            <a class="nav-item" href="{{ url_for('document_analysis') }}">
+                <i class="fas fa-file-alt"></i>
+                تحليل المستندات
+            </a>
+            <a class="nav-item" href="{{ url_for('legal_library.legal_library_page') }}">
+                <i class="fas fa-book-open"></i>
+                المكتبة القانونية
+            </a>
+            <a class="nav-item" href="{{ url_for('law_information') }}">
+                <i class="fas fa-info-circle"></i>
+                معلومات قانونية
+            </a>
+            <a class="nav-item" href="{{ url_for('legal_resources') }}">
+                <i class="fas fa-gavel"></i>
+                مصادر قانونية
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <a href="{{ url_for('home') }}">الرئيسية</a>
+                <a href="{{ url_for('chat.chat_page') }}">محادثة بناء القضية</a>
+                <a href="{{ url_for('document_analysis') }}">تحليل المستندات</a>
+            </div>
+            <div class="footer-section">
+                <h3>تواصل معنا</h3>
+                <p><i class="fas fa-envelope"></i> info@lawyer-ai.com</p>
+                <p><i class="fas fa-phone"></i> +970 59 000 0000</p>
+>>>>>>> 617fa18f726f9f4b38c98b82f3cd130d307a4269
             </div>
         </div>
-    </nav>
+        <div class="footer-bottom">
+            <p>جميع الحقوق محفوظة &copy; {{ now.year }} المحامي الذكي</p>
+        </div>
+    </footer>
 
+<<<<<<< HEAD
     <style>
     .navbar {
         padding: 1rem 0;
@@ -153,5 +239,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block extra_js %}{% endblock %}
+=======
+    <!-- JavaScript Files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    {% block scripts %}{% endblock %}
+>>>>>>> 617fa18f726f9f4b38c98b82f3cd130d307a4269
 </body>
 </html>
